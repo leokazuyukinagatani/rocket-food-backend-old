@@ -1,8 +1,7 @@
-import { UserRepository } from '../../repositories/users/UserRepository';
+import { UserRepository, IUser } from '../../repositories/users/UserRepository';
 import { AppError } from '../../utils/AppError'
 import * as EmailValidator from 'email-validator';
 import { hashSync } from 'bcryptjs'
-import { User } from '@prisma/client';
 
 class UserCreateService {
   repository: UserRepository
@@ -11,7 +10,7 @@ class UserCreateService {
     this.repository = repository
   }
 
-  async execute({ name, email, password}:User, passwordConfirm:string) {
+  async execute({ name, email, password}:IUser, passwordConfirm:string) {
     let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#?])(?:([0-9a-zA-Z$*&@#])(?!\1)){8,}$/;
     
     if(!name) {

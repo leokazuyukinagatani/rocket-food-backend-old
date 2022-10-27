@@ -1,12 +1,12 @@
 import { prisma } from '../../database/prisma'
-export interface IRequest {
+export interface IUser {
   name: string
   email: string
   password: string
 }
 export class UserRepository {
 
-  async create({ name, email, password }:IRequest) {
+  async create({ name, email, password }:IUser) {
    
     
     const newUser = await prisma.user.create({
