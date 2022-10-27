@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Food-Explorer API",
+    "description": "Documentação de uma API Node/Express com Swagger - Rocketseat Explorer"
   },
   "host": "localhost:3333",
   "basePath": "/",
@@ -13,7 +13,7 @@
   "paths": {
     "/users/": {
       "post": {
-        "description": "",
+        "description": "Cria um novo usuário",
         "parameters": [],
         "responses": {}
       }
