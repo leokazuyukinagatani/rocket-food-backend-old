@@ -4,7 +4,7 @@ export interface IRequest {
   email: string
   password: string
 }
-class UserRepository {
+export class UserRepository {
 
   async create({ name, email, password }:IRequest) {
    
@@ -29,8 +29,4 @@ class UserRepository {
 
     return user
   } 
-}
-
-export {
-  UserRepository
 }
