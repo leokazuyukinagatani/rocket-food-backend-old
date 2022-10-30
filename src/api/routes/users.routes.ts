@@ -7,6 +7,7 @@ const usersController = new UsersController()
 
 usersRoutes.post('/', usersController.create)
 
+
 export {
   usersRoutes
 }
