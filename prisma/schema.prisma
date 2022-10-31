@@ -28,8 +28,7 @@ model Role {
   name        String       @unique
   description String
   createdAt   DateTime     @default(now())
-  user        User         @relation(fields: [userId], references: [id])
-  userId      String
+  users       User[]
   permissions Permission[]
 
   @@map("roles")
@@ -40,10 +39,8 @@ model Permission {
   name        String   @unique
   description String
   createdAt   DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
-  role        Role     @relation(fields: [roleId], references: [id])
-  roleId      String
+  users       User[]
+  roles       Role[]
 
   @@map("permissions")
 }
@@ -55,8 +52,9 @@ model Image {
   image_name String
   Ingredient Ingredient[]
   Product    Product[]
-  user       User @relation(fields: [userId], references: [id])
-  userId     String @unique
+  user       User         @relation(fields: [userId], references: [id])
+  userId     String       @unique
+
   @@map("images")
 }
 
