@@ -19,8 +19,8 @@ export function ensureAuthenticated( request:Request, response:Response, next:Ne
     request.body.user = {
       id: user_id
     }
+    return next()
   } catch(error) {
     throw new AppError("Jwt inválido", 401)
   }
-
 }
