@@ -1,7 +1,7 @@
 import { prisma } from '../../database/prisma'
 
 export interface IProduct{
-  id?:number
+  id?:string
   name:string
   description:string
   price:number
@@ -10,104 +10,10 @@ export interface IProduct{
 export class ProductRepository {
 
   async index() {
-    const products = await prisma.product.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        price: true,
-        image: {
-          select: {
-            id: true,
-            image_name: true,
-            image_type: true
-          }
-        },
-        ingredients: {
-          select: {
-            ingredient: {
-              select: {
-                id: true,
-                name: true,
-                image: {
-                  select: {
-                    id: true,
-                    image_name: true,
-                    image_type: true
-                  }
-                }
-              }
-            }
-          }
-        },
-        categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                description: true
-              }
-            }
-          }
-        },
-      },
-      orderBy: {
-        id: 'asc'
-      }
-    })
-    return products
   }
 
-  async findById(id:number) {
-    const product = await prisma.product.findFirst({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        price: true,
-        image: {
-          select: {
-            id: true,
-            image_name: true,
-            image_type: true
-          }
-        },
-        ingredients: {
-          select: {
-            ingredient: {
-              select: {
-                id: true,
-                name: true,
-                image: {
-                  select: {
-                    id: true,
-                    image_name: true,
-                    image_type: true
-                  }
-                }
-              }
-            }
-          }
-        },
-        categories: {
-          select: {
-            category: {
-              select: {
-                id: true,
-                name: true,
-                description: true
-              }
-            }
-          }
-        },
-      },
-      where: {
-        id
-      }
-    })
-
-    return product
+  async findById(id:string) {
+    return id
   }
 
   async findByName(name:string) {
@@ -119,6 +25,7 @@ export class ProductRepository {
 
     return product
   }
+
 
   async create({ name, description, price, image_id }:IProduct) {
     const newProduct = await prisma.product.create({
@@ -134,6 +41,7 @@ export class ProductRepository {
   }
 
   async update({ id, name, description, price, image_id }:IProduct) {
+    
     const product = await prisma.product.update({
       where: {
         id
@@ -149,7 +57,8 @@ export class ProductRepository {
     return product
   }
 
-  async delete(id:number) {
+
+  async delete(id:string) {
     const deletedProduct = await prisma.product.delete({
       where: {
         id
@@ -159,15 +68,5 @@ export class ProductRepository {
     return { id: deletedProduct.id }
   }
 
-  async addCategory(product_id:number, category_id:number) {
-    const relation = await prisma.productCategory.create({
-      data: {
-        fk_id_category: category_id,
-        fk_id_product: product_id
-      }
-    })
-
-    return relation
-  }
 }
 
