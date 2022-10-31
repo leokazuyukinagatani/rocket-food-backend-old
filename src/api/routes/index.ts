@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { usersRoutes } from './users.routes'
+import { rolesRoutes } from './roles.routes'
 import { productsRoutes } from './products.routes'
 import { categoriesRoutes } from './categories.routes'
 import { ingredientsRoutes } from './ingredients.routes'
@@ -17,6 +18,7 @@ const routes = Router()
 
 routes.use('/sessions', sessionsRoutes)
 routes.use('/users', usersRoutes)
+routes.use('/roles', rolesRoutes)
 routes.use('/products', productsRoutes)
 
 routes.use('/categories', categoriesRoutes)
