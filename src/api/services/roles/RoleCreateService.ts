@@ -5,7 +5,6 @@ import { AppError } from "../../utils/AppError"
 interface RoleRequest {
   name: string
   description: string
-  userId: string
 }
 
 export class RoleCreateService {
@@ -14,14 +13,14 @@ export class RoleCreateService {
   constructor(repository:RoleRepository) {
     this.repository = repository
   }
-  async execute({name, description, userId }: RoleRequest): Promise<Role | Error> {
+  async execute({ name, description }: RoleRequest): Promise<Role | Error> {
 
     const roleExist = await this.repository.showByName(name)
     if(roleExist){
-      throw new AppError("Role already exists")
+      throw new AppError("Role already exists",403)
     }
 
-    const role = await this.repository.create(name, description, userId)
+    const role = await this.repository.create(name, description)
     
     return role
   }

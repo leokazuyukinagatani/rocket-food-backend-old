@@ -1,12 +1,11 @@
 import { prisma } from '../../database/prisma'
 
 export class RoleRepository {
-  async create(name:string, description:string, userId:string) {
+  async create(name:string, description:string) {
     const role = await prisma.role.create({
       data: {
         name,
-        description,
-        userId
+        description
       }
     })
     return role
