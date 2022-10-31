@@ -16,8 +16,7 @@ export class UserRepository {
         password
       }
     })
-
-    return newUser
+    return newUser.id
   }
 
   async findByEmail(email:string) {
@@ -26,7 +25,6 @@ export class UserRepository {
         email
       }
     })
-
     return user
   } 
 }
