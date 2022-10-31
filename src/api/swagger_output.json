@@ -2,18 +2,32 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Food-Explorer API",
-    "description": "Documentação de uma API Node/Express com Swagger - Rocketseat Explorer"
+    "title": "REST API",
+    "description": ""
   },
-  "host": "localhost:3333",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "http"
   ],
   "paths": {
+    "/session/": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/users/": {
       "post": {
-        "description": "Cria um novo usuário",
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/products/": {
+      "post": {
+        "description": "",
         "parameters": [],
         "responses": {}
       }
