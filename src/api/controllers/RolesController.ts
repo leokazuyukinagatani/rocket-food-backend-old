@@ -4,13 +4,12 @@ import { RoleCreateService } from "../services/roles/RoleCreateService";
 
 export class RolesController {
   async create(request: Request, response:Response) {
-    const { name, description, user } = request.body
+    const { name, description } = request.body
 
-    const userId = user.id
     const roleRepository = new RoleRepository()
     const roleCreateService = new RoleCreateService(roleRepository) 
 
-    const result = await roleCreateService.execute({name, description, userId})
+    const result = await roleCreateService.execute({name, description})
 
     if(result instanceof Error) {
       return response.status(400).json(result.message)
