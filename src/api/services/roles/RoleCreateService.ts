@@ -15,13 +15,22 @@ export class RoleCreateService {
   }
   async execute({ name, description }: RoleRequest): Promise<Role | Error> {
 
-    const roleExist = await this.repository.showByName(name)
-    if(roleExist){
-      throw new AppError("Role already exists",403)
+
+    try {
+      const roleExist = await this.repository.showByName(name)
+      if(roleExist){
+        throw new AppError("Role already exists",403)
+      }
+    } catch (error) {
+      console.log(error)
     }
 
-    const role = await this.repository.create(name, description)
+    try {
+      const role = await this.repository.create(name, description)
+      return role
+    } catch (error) {
+      throw new  AppError('Não foi possivel criar a role')
+    }
     
-    return role
   }
 }
