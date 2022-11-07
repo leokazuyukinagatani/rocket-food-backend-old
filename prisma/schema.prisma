@@ -9,85 +9,135 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  name        String
-  email       String       @unique
-  password    String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  profile     Image?
-  roles       Role[]
-  permissions Permission[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Image?   @relation(fields: [imageId], references: [id])
+
+  imageId     String?              @unique
+  roles       UsersOnRoles[]
+  permissions UsersOnPermissions[]
   favorites   Product[]
 
   @@map("users")
 }
 
 model Role {
-  id          String       @id @default(uuid())
-  name        String       @unique
+  id          String               @id @default(uuid())
+  name        String               @unique
   description String
-  createdAt   DateTime     @default(now())
-  users       User[]
-  permissions Permission[]
+  createdAt   DateTime?            @default(now())
+  users       UsersOnRoles[]
+  permissions PermissionsOnRoles[]
 
   @@map("roles")
 }
 
+model UsersOnRoles {
+  userId String
+  roleId String
+
+  user User @relation(fields: [userId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+  @@map("users_roles")
+}
+
 model Permission {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String
-  createdAt   DateTime @default(now())
-  users       User[]
-  roles       Role[]
+
+  users UsersOnPermissions[]
+  roles PermissionsOnRoles[]
 
   @@map("permissions")
 }
 
+model PermissionsOnRoles {
+  permissionId String
+  roleId       String
+
+  permission Permission @relation(fields: [permissionId], references: [id])
+  role       Role       @relation(fields: [roleId], references: [id])
+
+  @@id([permissionId, roleId])
+  @@map("permissions_roles")
+}
+
+model UsersOnPermissions {
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId String
+
+  @@id([userId, permissionId])
+  @@map("users_permissions")
+}
+
 model Image {
-  id         String       @id @default(uuid())
-  image_data Bytes
-  image_type String
-  image_name String
-  Ingredient Ingredient[]
-  Product    Product[]
-  user       User         @relation(fields: [userId], references: [id])
-  userId     String       @unique
+  id          String      @id @default(uuid())
+  image_data  Bytes
+  image_type  String
+  image_name  String
+  ingredients Ingredient?
+  products    Product?
+  User        User?
 
   @@map("images")
 }
 
 model Ingredient {
-  id          String    @id @default(uuid())
+  id          String @id @default(uuid())
   description String
-  name        String    @unique
-  products    Product[]
-  image       Image     @relation(fields: [image_id], references: [id])
-  image_id    String
+  name        String @unique
+  imageId     String @unique
+
+  image    Image?                  @relation(fields: [imageId], references: [id])
+  products IngredientsOnProducts[]
 
   @@map("ingredients")
 }
 
 model Product {
-  id          String       @id @default(uuid())
-  name        String       @unique
+  id          String @id @default(uuid())
+  name        String @unique
   description String
   price       Int
-  image       Image        @relation(fields: [image_id], references: [id])
-  image_id    String
-  ingredients Ingredient[]
-  categories  Category[]
-  users       User[]
+
+  categoryId String @unique
+  userId     String @unique
+  imageId    String @unique
+
+  category    Category?               @relation(fields: [categoryId], references: [id])
+  user        User?                   @relation(fields: [userId], references: [id])
+  image       Image?                  @relation(fields: [imageId], references: [id])
+  ingredients IngredientsOnProducts[]
 
   @@map("products")
 }
 
+model IngredientsOnProducts {
+  ingredientId String @unique
+  productId    String @unique
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+  product    Product    @relation(fields: [productId], references: [id])
+
+  @@id([ingredientId, productId])
+  @@map("ingredients_products")
+}
+
 model Category {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String @id @default(uuid())
+  name        String @unique
   description String
-  products    Product[]
+
+  products Product[]
 
   @@map("categories")
 }
