@@ -9,13 +9,13 @@ import { ProductUpdateService } from "../services/products/ProductUpdateService"
 export class ProductsController {
 
   async create( request:Request, response:Response){
-    const { name, description, price }:IProduct = request.body
+    const { name, description, price, imageId }:IProduct = request.body
 
     const productRepository = new ProductRepository()
     const productCreateService = new ProductCreateService(productRepository)
 
-    const image_id = ''
-    const { id } = await productCreateService.execute({ name, description, price, image_id });
+  
+    const { id } = await productCreateService.execute({ name, description, price, imageId });
 
     return response.status(201).json({ id })
   }
@@ -52,11 +52,11 @@ export class ProductsController {
   }
 
   async update( request:Request, response:Response ){
-    const { id, name, description, price, image_id }:IProduct = request.body
+    const { id, name, description, price, imageId }:IProduct = request.body
     const productRepository = new ProductRepository()
     const productUpdateService = new ProductUpdateService(productRepository)
 
-    await productUpdateService.execute({ id, name, description, price, image_id })
+    await productUpdateService.execute({ id, name, description, price, imageId })
 
     return response.status(200)
   }
