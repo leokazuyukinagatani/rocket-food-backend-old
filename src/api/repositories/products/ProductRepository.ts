@@ -5,7 +5,7 @@ export interface IProduct{
   name:string
   description:string
   price:number
-  image_id:string
+  imageId:string
 }
 export class ProductRepository {
 
@@ -27,20 +27,20 @@ export class ProductRepository {
   }
 
 
-  async create({ name, description, price, image_id }:IProduct) {
+  async create({ name, description, price, imageId }:IProduct) {
     const newProduct = await prisma.product.create({
       data: {
         name,
         description,
         price,
-        image_id
+        imageId
       }
     })
 
     return { id: newProduct.id }
   }
 
-  async update({ id, name, description, price, image_id }:IProduct) {
+  async update({ id, name, description, price }:IProduct) {
     
     const product = await prisma.product.update({
       where: {
@@ -49,8 +49,7 @@ export class ProductRepository {
       data: {
         name,
         description,
-        price,
-        image_id
+        price
       }
     })
 

@@ -8,7 +8,7 @@ export class ProductCreateService {
     this.repository = repository
   }
 
-  async execute({ name, description, price, image_id }:IProduct) {
+  async execute({ name, description, price, imageId }:IProduct) {
     if (!name) {
       throw new AppError('Nome do produto é obrigatório.')
     }
@@ -21,9 +21,9 @@ export class ProductCreateService {
       throw new AppError('Preço do produto é obrigatório.')
     }
 
-    if (!image_id) {
-      throw new AppError('Imagem do produto é obrigatória.')
-    }
+    // if (!imageId) {
+    //   throw new AppError('Imagem do produto é obrigatória.')
+    // }
 
     const productWithName = await this.repository.findByName(name)
 
@@ -31,7 +31,7 @@ export class ProductCreateService {
       throw new AppError('Já existe um produto cadastrado com esse nome.')
     }
 
-    const productCreatedId = await this.repository.create({ name, description, price, image_id })
+    const productCreatedId = await this.repository.create({ name, description, price, imageId })
 
     return productCreatedId
   }

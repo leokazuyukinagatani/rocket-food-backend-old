@@ -1,15 +1,11 @@
-import { Permission, Role, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import { prisma } from "../../database/prisma";
 export interface IUser {
   name: string;
   email: string;
   password: string;
 }
-interface IUserWithPermissionsAndRoles {
-  user: User
-  permissions: Permission[]
-  roles: Role[]
-}
+
 export class UserRepository {
   async create({ name, email, password }: IUser) {
     const newUser = await prisma.user.create({
@@ -22,45 +18,28 @@ export class UserRepository {
     return newUser.id;
   }
   
-  async update({user, permissions, roles}:IUserWithPermissionsAndRoles) {
+  async update({ id, name, email, password }: User) {
 
-    if(permissions){
-     try {
-      for(let permission of permissions ){
-        await prisma.usersOnPermissions.create({
-          data: {
-            permissionId: permission.id,
-            userId: user.id
-          }
-        })
-      }
-     } catch (error) {
-        console.log(error)
-     }
+   const userId = await prisma.user.update({
+    where: {
+      id
+    },
+    data: {
+      name,
+      email,
+      password,
+      updatedAt: (new Date())
     }
-    if(roles){
-      try {
-        for(let role of roles) {
-          await prisma.usersOnRoles.create({
-            data: {
-              roleId: role.id,
-              userId: user.id
-            }
-          })
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
+   })
 
-    return user.id
+    return userId
   }
 
   async findByEmail(email: string) {
     const user = await prisma.user.findFirst({
       where: {
         email,
-      },
+      }
     });
     return user;
   }
