@@ -41,11 +41,7 @@ export class CreateUserAccessControlListService {
     }
 
 
-    await userRepository.update({
-      user,
-      permissions,
-      roles
-    })
+    await userRepository.update(user)
     
     return user
 
