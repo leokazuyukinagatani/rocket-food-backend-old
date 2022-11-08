@@ -113,9 +113,9 @@ model Product {
   description String
   price       Int
 
-  categoryId String @unique
-  userId     String @unique
-  imageId    String @unique
+  categoryId String? @unique
+  userId     String? @unique
+  imageId    String? @unique
 
   category    Category?               @relation(fields: [categoryId], references: [id])
   user        User?                   @relation(fields: [userId], references: [id])
