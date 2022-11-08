@@ -38,6 +38,7 @@
     "prisma-erd-generator": "^1.2.2",
     "swagger-autogen": "^2.22.0",
     "swagger-ui-express": "^4.5.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zod": "^3.19.1"
   }
 }
