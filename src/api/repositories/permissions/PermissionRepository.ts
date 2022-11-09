@@ -23,18 +23,18 @@ export class PermissionRepository {
     return permission
   }
 
-  async showByIds(permissions:Permission[]) {
+  async showByIds(permissions: string[]) {
 
-    let permissionsResult
+    let permissionsResult:Permission[] = []
 
     for(let permission of permissions ){
       const result = await prisma.permission.findFirst({
         where: {
-          id: permission.id
+          id: permission
         }
       })
       if(result){
-        permissions.push(permission)
+        permissionsResult.push(result)
       }
     }    
    

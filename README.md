@@ -8,16 +8,18 @@
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
 
-# Título do Projeto
+# Rocket Food
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
-
+E-commerce para restaurantes desenvolvido como projeto final do curso Explorer da Rocketseat.
 
 ## Funcionalidades
 ### Usuário
 - criar usuário
 - buscar usuário por email
 - colocar foto de perfil
+
+### Autenticação
+- JWT
 
 ### ACL
 - criar role
@@ -53,14 +55,9 @@ Uma breve descrição sobre o que esse projeto faz e para quem ele é
 **Back-end:** Node, Express
 
 ## Roadmap
-  - Setup(Fastify, Prisma)
+  - Setup(Express, Prisma)
   - Criação do Banco de dados
   - Criação do Diagram ERD
-  - Criação da função de contagem dos bolões
-  - Estrutura do banco de dados
-  - Criação da função de criar um bolão
-  - Criação da função de contagem de usuários
-  - Criação da função de contagem de palpites
 
 ## Rodando localmente
 
