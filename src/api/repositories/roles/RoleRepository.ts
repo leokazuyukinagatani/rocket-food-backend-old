@@ -1,6 +1,5 @@
 import { Role } from "@prisma/client";
 import { prisma } from "../../database/prisma";
-import { AppError } from "../../utils/AppError";
 
 export class RoleRepository {
   async create(name: string, description: string) {
@@ -22,13 +21,13 @@ export class RoleRepository {
     return role;
   }
 
-  async showByIds(roles: Role[]) {
-    let rolesResult = [];
+  async showByIds(roles: string[]) {
+    let rolesResult:Role[] = [];
 
     for (let role of roles) {
       const result = await prisma.role.findFirst({
         where: {
-          id: role.id,
+          id: role,
         },
       });
       if (result) {
