@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
+import { PermissionRepository } from "../repositories/permissions/PermissionRepository";
+import { RoleRepository } from "../repositories/roles/RoleRepository";
 import { UserRepository } from '../repositories/users/UserRepository'
+import { ACLCreateUserAccessControlListService } from "../services/acls/ACLCreateUserAccessControlListService";
 import { UserCreateService } from '../services/users/UserCreateService'
 import { UserShowService } from '../services/users/UserShowService'
 
@@ -24,6 +27,18 @@ export class UsersController {
     const user = await userShowService.execute(email)
 
     return response.status(200).json({user})
+  }
+  async access( request:Request, response:Response) {
+    const { roles, permissions, userId } = request.body
+    
+    const userRepository = new UserRepository()
+    const roleRepository = new RoleRepository()
+    const permissionRepository = new PermissionRepository()
+
+    const userACL = new ACLCreateUserAccessControlListService(userRepository,permissionRepository,roleRepository)
+    userACL.execute({userId, roles, permissions})
+
+    return response.status(200).json({})
   }
 }
 

@@ -39,8 +39,9 @@ export class ACLCreateUserAccessControlListService {
     const roleShowService = new RoleShowService(this.roleRepository)
     const roleExists = await roleShowService.execute(roles)
 
-
-    await this.userRepository.updateACL(user, permissionExists, roleExists)
+    if(roleExists){
+      await this.userRepository.updateACL(user.id, permissionExists, roleExists)
+    }
 
   
     

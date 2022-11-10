@@ -64,6 +64,8 @@ export class UserRepository {
         userId: id,
         permissionId
       }
+
+      
       return itemResponse
     }
 
@@ -71,7 +73,7 @@ export class UserRepository {
 
 
   
-    return
+    return aux
   }
 
 }

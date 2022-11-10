@@ -8,7 +8,7 @@ const usersController = new UsersController()
 
 usersRoutes.post('/', usersController.create)
 usersRoutes.get('/',ensureAuthenticated, usersController.show)
-//usersRoutes.put('/', usersController.update)
+usersRoutes.post('/acl', usersController.access)
 
 export {
   usersRoutes
