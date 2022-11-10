@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserRepository } from '../repositories/users/UserRepository'
 import { UserCreateService } from '../services/users/UserCreateService'
 import { UserShowService } from '../services/users/UserShowService'
-import { AppError } from "../utils/AppError";
 
 export class UsersController {
   async create( request:Request, response:Response){

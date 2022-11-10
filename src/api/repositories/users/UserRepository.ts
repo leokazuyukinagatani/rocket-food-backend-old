@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Permission, Role, User, UsersOnPermissions } from "@prisma/client";
 import { prisma } from "../../database/prisma";
 export interface IUser {
   name: string;
@@ -35,7 +35,7 @@ export class UserRepository {
     return userId
   }
 
-  async findByEmail(email: string) {
+  async showByEmail(email: string) {
     const user = await prisma.user.findFirst({
       where: {
         email,
@@ -44,7 +44,7 @@ export class UserRepository {
     return user;
   }
 
-  async findById(id: string) {
+  async showById(id: string) {
     const user = await prisma.user.findFirst({
       where: {
         id,
@@ -52,4 +52,26 @@ export class UserRepository {
     });
     return user;
   }
+
+  async updateACL(id: string, permissionExists:Permission[], roleExists:Role[]) {
+
+
+    const aux:UsersOnPermissions[] = permissionExists.map(permissionsOnUser)
+
+    function permissionsOnUser(item:Permission){
+      const permissionId = item.id
+      const itemResponse:UsersOnPermissions = {
+        userId: id,
+        permissionId
+      }
+      return itemResponse
+    }
+
+    console.log(aux)
+
+
+  
+    return
+  }
+
 }

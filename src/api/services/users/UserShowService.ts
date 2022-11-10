@@ -10,7 +10,7 @@ class UserShowService {
 
   async execute(email:string) {
  
-    const userWithEmail = await this.repository.findByEmail(email)
+    const userWithEmail = await this.repository.showByEmail(email)
 
     return userWithEmail
   }

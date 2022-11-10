@@ -40,7 +40,7 @@ class UserCreateService {
     if(password != passwordConfirm) {
       throw new AppError('Senhas não conferem')
     }
-    const userWithEmail = await this.repository.findByEmail(email)
+    const userWithEmail = await this.repository.showByEmail(email)
 
     if(userWithEmail) {
       throw new AppError('Email já cadastrado',403)

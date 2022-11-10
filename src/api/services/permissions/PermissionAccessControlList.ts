@@ -24,7 +24,7 @@ export class PermissionAccessControlListService {
   async execute({ userId, permission }: UserACLPermissionRequest) {
   
     
-    const user = await this.userRepository.findById(userId)
+    const user = await this.userRepository.showById(userId)
         
     if(!user) {
       throw new AppError("Usuário não existe!")
@@ -36,6 +36,9 @@ export class PermissionAccessControlListService {
     }
     
 
+    
+  
+    
     await this.permissionACLRepository.create(
       user.id,
       permissionExists.id
