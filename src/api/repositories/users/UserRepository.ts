@@ -54,6 +54,37 @@ export class UserRepository {
     return user;
   }
 
+  async showByIdWithPermissions(id: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        permissions: {
+          where:{
+            userId: id
+          }
+        }
+      }
+    });
+    return user;
+  }
+  async showByIdWithRoles(id: string) {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        roles: {
+          where:{
+            userId: id
+          }
+        }
+      }
+    });
+    return user;
+  }
+
   async updateACL(id: string, permissionExists:Permission[], roleExists:Role[]) {
    
     function permissionIds(item:Permission){
