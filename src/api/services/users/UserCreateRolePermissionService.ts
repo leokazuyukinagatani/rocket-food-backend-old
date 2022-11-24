@@ -19,9 +19,9 @@ export class CreateRolePermissionService {
     this.permissionRepository = permissionRepository
   }
   
-  async execute({ roleId, permissions}: RolePermissionRequest): Promise<Role> {
-    await this.roleRepository.showByIds(roleId)
-    await this.userRepository.showById(user.id)
-    await this.permissionRepository.showById(permissions)
+  async execute({ roleId, permissions}: RolePermissionRequest){
+    // await this.roleRepository.showByIds(roleId)
+    // await this.userRepository.showById(user.id)
+    // await this.permissionRepository.showById(permissions)
   }
 }

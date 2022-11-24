@@ -24,7 +24,7 @@ export class RoleAccessControlListService {
   async execute({ userId, role }: UserACLRoleRequest) {
   
     
-    const user = await this.userRepository.findById(userId)
+    const user = await this.userRepository.showById(userId)
         
     if(!user) {
       throw new AppError("Usuário não existe!")

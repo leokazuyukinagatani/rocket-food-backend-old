@@ -11,7 +11,21 @@ export class RoleRepository {
     });
     return role;
   }
-
+  async update(roleId: string, permissionsIds: { permissionId: string }[]) {
+    const role = await prisma.role.update({
+      where: {
+        id: roleId,
+      },
+      data: {
+        permissions: {
+          createMany: {
+            data: permissionsIds,
+          },
+        },
+      },
+    });
+    return role;
+  }
   async showByName(name: string) {
     const role = await prisma.role.findFirst({
       where: {
@@ -20,9 +34,16 @@ export class RoleRepository {
     });
     return role;
   }
-
+  async showById(roleId: string) {
+    const role = await prisma.role.findFirst({
+      where: {
+        id: roleId,
+      },
+    });
+    return role;
+  }
   async showByIds(roles: string[]) {
-    let rolesResult:Role[] = [];
+    let rolesResult: Role[] = [];
 
     for (let role of roles) {
       const result = await prisma.role.findFirst({

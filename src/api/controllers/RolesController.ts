@@ -17,5 +17,5 @@ export class RolesController {
     }
 
     return response.status(201).json(result)
-  } 
+  }
 }

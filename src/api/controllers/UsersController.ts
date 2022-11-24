@@ -29,14 +29,14 @@ export class UsersController {
     return response.status(200).json({user})
   }
   async access( request:Request, response:Response) {
-    const { roles, permissions, userId } = request.body
+    const { roles, permissions, userEmail } = request.body
     
     const userRepository = new UserRepository()
     const roleRepository = new RoleRepository()
     const permissionRepository = new PermissionRepository()
 
     const userACL = new ACLCreateUserAccessControlListService(userRepository,permissionRepository,roleRepository)
-    userACL.execute({userId, roles, permissions})
+    userACL.execute({userEmail, roles, permissions})
 
     return response.status(200).json({})
   }

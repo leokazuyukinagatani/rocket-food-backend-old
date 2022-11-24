@@ -3,7 +3,7 @@ import { UserRepository } from '../../repositories/users/UserRepository';
 import { PermissionACLRepository } from '../../repositories/permissions/PermissionACLRepository';
 import { AppError } from '../../utils/AppError'
 
-interface UserACLPermissionRequest {
+export interface IUserACLPermissionRequest {
   userId: string
   permission: string
 }
@@ -21,7 +21,7 @@ export class PermissionAccessControlListService {
 
   }
 
-  async execute({ userId, permission }: UserACLPermissionRequest) {
+  async execute({ userId, permission }: IUserACLPermissionRequest) {
   
     
     const user = await this.userRepository.showById(userId)
@@ -34,10 +34,6 @@ export class PermissionAccessControlListService {
     if(!permissionExists){
       throw new AppError("Permissões não existente!")
     }
-    
-
-    
-  
     
     await this.permissionACLRepository.create(
       user.id,

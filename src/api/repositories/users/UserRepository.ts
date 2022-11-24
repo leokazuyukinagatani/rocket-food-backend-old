@@ -1,5 +1,6 @@
-import { Permission, Role, User, UsersOnPermissions } from "@prisma/client";
+import { Permission, Role, User } from "@prisma/client";
 import { prisma } from "../../database/prisma";
+
 export interface IUser {
   name: string;
   email: string;
@@ -54,26 +55,67 @@ export class UserRepository {
   }
 
   async updateACL(id: string, permissionExists:Permission[], roleExists:Role[]) {
-
-
-    const aux:UsersOnPermissions[] = permissionExists.map(permissionsOnUser)
-
-    function permissionsOnUser(item:Permission){
+   
+    function permissionIds(item:Permission){
       const permissionId = item.id
-      const itemResponse:UsersOnPermissions = {
-        userId: id,
+      const itemResponse = {
         permissionId
       }
-
-      
       return itemResponse
     }
+    function roleIds(item:Role){
+      const roleId = item.id
+      const itemResponse = {
+        roleId
+      }
+      return itemResponse
+    }
+    
+    
+    const permissionsIds = permissionExists.map(permissionIds)
+    const rolesIds = roleExists.map(roleIds)
 
-    console.log(aux)
+    // console.log("AUX =======>",permissionsIds,"<======AUX")
 
+    const user = await prisma.user.update({
+      where:{
+        id
+      },
+      data: {
+        permissions: {
+          createMany: {
+            data: permissionsIds
+          }
+        },
+        roles: {
+          createMany: {
+            data: rolesIds
+          }
+        }
+      }
+    })
+    
+    // await prisma.usersOnPermissions.createMany({
+    //   data:{
+    //     userId: id,
+    //     permissionId
+    //   }
+    // })
 
+    // const permissionRepository = new PermissionRepository()
+    // const userRepository = new UserRepository()
+    // const permissionACLRepository = new PermissionACLRepository()
+
+    // const permissionAccessControlListService = new PermissionAccessControlListService(permissionRepository, userRepository, permissionACLRepository)
+    
+    // async function auxFunction(item){
+    //   permissionAccessControlListService.execute(item)
+    // }
+
+    
+ 
   
-    return aux
+    return user
   }
 
 }

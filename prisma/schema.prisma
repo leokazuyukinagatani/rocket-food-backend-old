@@ -13,18 +13,17 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  profile   Image?   @relation(fields: [imageId], references: [id])
-
+  id          String               @id @default(uuid())
+  name        String
+  email       String               @unique
+  password    String
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
   imageId     String?              @unique
-  roles       UsersOnRoles[]
+  profile     Image?               @relation(fields: [imageId], references: [id])
+  favorites   Product?
   permissions UsersOnPermissions[]
-  favorites   Product[]
+  roles       UsersOnRoles[]
 
   @@map("users")
 }
@@ -34,8 +33,8 @@ model Role {
   name        String               @unique
   description String
   createdAt   DateTime?            @default(now())
-  users       UsersOnRoles[]
   permissions PermissionsOnRoles[]
+  users       UsersOnRoles[]
 
   @@map("roles")
 }
@@ -43,21 +42,19 @@ model Role {
 model UsersOnRoles {
   userId String
   roleId String
-
-  user User @relation(fields: [userId], references: [id])
-  role Role @relation(fields: [roleId], references: [id])
+  role   Role   @relation(fields: [roleId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   @@id([userId, roleId])
   @@map("users_roles")
 }
 
 model Permission {
-  id          String    @id @default(uuid())
-  name        String    @unique
+  id          String               @id @default(uuid())
+  name        String               @unique
   description String
-
-  users UsersOnPermissions[]
-  roles PermissionsOnRoles[]
+  roles       PermissionsOnRoles[]
+  users       UsersOnPermissions[]
 
   @@map("permissions")
 }
@@ -65,19 +62,18 @@ model Permission {
 model PermissionsOnRoles {
   permissionId String
   roleId       String
-
-  permission Permission @relation(fields: [permissionId], references: [id])
-  role       Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  role         Role       @relation(fields: [roleId], references: [id])
 
   @@id([permissionId, roleId])
   @@map("permissions_roles")
 }
 
 model UsersOnPermissions {
-  user         User       @relation(fields: [userId], references: [id])
   userId       String
-  permission   Permission @relation(fields: [permissionId], references: [id])
   permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
 
   @@id([userId, permissionId])
   @@map("users_permissions")
@@ -96,52 +92,47 @@ model Image {
 }
 
 model Ingredient {
-  id          String @id @default(uuid())
+  id          String                 @id @default(uuid())
   description String
-  name        String @unique
-  imageId     String @unique
-
-  image    Image?                  @relation(fields: [imageId], references: [id])
-  products IngredientsOnProducts[]
+  name        String                 @unique
+  imageId     String                 @unique
+  image       Image                  @relation(fields: [imageId], references: [id])
+  products    IngredientsOnProducts?
 
   @@map("ingredients")
 }
 
 model Product {
-  id          String @id @default(uuid())
-  name        String @unique
+  id          String                 @id @default(uuid())
+  name        String                 @unique
   description String
   price       Int
-
-  categoryId String? @unique
-  userId     String? @unique
-  imageId    String? @unique
-
-  category    Category?               @relation(fields: [categoryId], references: [id])
-  user        User?                   @relation(fields: [userId], references: [id])
-  image       Image?                  @relation(fields: [imageId], references: [id])
-  ingredients IngredientsOnProducts[]
+  categoryId  String?                @unique
+  userId      String?                @unique
+  imageId     String?                @unique
+  category    Category?              @relation(fields: [categoryId], references: [id])
+  image       Image?                 @relation(fields: [imageId], references: [id])
+  user        User?                  @relation(fields: [userId], references: [id])
+  ingredients IngredientsOnProducts?
 
   @@map("products")
 }
 
 model IngredientsOnProducts {
-  ingredientId String @unique
-  productId    String @unique
-
-  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
-  product    Product    @relation(fields: [productId], references: [id])
+  ingredientId String     @unique
+  productId    String     @unique
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  product      Product    @relation(fields: [productId], references: [id])
 
   @@id([ingredientId, productId])
   @@map("ingredients_products")
 }
 
 model Category {
-  id          String @id @default(uuid())
-  name        String @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String
-
-  products Product[]
+  products    Product?
 
   @@map("categories")
 }
