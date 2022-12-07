@@ -1,17 +1,21 @@
-import { User } from "@prisma/client";
 import { compare, hash } from "bcryptjs";
 import { UserRepository } from "../../repositories/users/UserRepository";
 import { AppError } from "../../utils/AppError";
 import { UserShowByEmailService } from "./UserShowByEmailService";
 import { UserShowService } from "./UserShowService";
 
+interface Image {
+  id: string;
+  filename: string;
+  url: string;
+}
 interface UserRequest {
   id: string;
   name?: string;
   email?: string;
   password?: string;
   passwordConfirm?: string;
-  imageId?: string | null;
+  image: Image;
 }
 
 export class UserUpdateService {
@@ -25,7 +29,7 @@ export class UserUpdateService {
     email,
     password,
     passwordConfirm,
-    imageId,
+    image
   }: UserRequest) {
     
     const user = await new UserShowService(this.repository).execute(id);
@@ -51,8 +55,6 @@ export class UserUpdateService {
       );
     }
 
-    const updated_at = new Date();
-
     if (password && passwordConfirm) {
       const checkedPassword = await compare(passwordConfirm, user.password);
       if (checkedPassword) {
@@ -69,11 +71,19 @@ export class UserUpdateService {
     }else {
       throw new AppError('Invalid password');
     }
+    if(image){
+      const updatedUserWithImage = await this.repository.update({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        image
+      });
+      return updatedUserWithImage;
+    }
     const updatedUser = await this.repository.update({
       id: user.id,
       name: user.name,
       email: user.email,
-      imageId: user.imageId
     });
 
     return updatedUser;

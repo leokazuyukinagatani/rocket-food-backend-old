@@ -1,4 +1,4 @@
-import { Permission, Role } from "@prisma/client";
+import { Image, Permission, Role } from "@prisma/client";
 import { prisma } from "../../database/prisma";
 
 export interface IUser {
@@ -13,7 +13,7 @@ interface IUserRequest {
   name?: string;
   email?: string;
   password?: string;
-  imageId?: string | null;
+  image?: Image;
 }
 
 export class UserRepository {
@@ -28,21 +28,39 @@ export class UserRepository {
     return { id: createdUser.id };
   }
 
-  async update({ id, name, email, password, imageId }: IUserRequest) {
-    const updatedUser = await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        name,
-        email,
-        password,
-        updatedAt: new Date(),
-        imageId
-      },
-    });
-
-    return { id: updatedUser.id };
+  async update({ id, name, email, password, image }: IUserRequest) {
+    if (image) {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          email,
+          password,
+          updatedAt: new Date(),
+          profile: {
+            create: {
+              ...image,
+            },
+          },
+        },
+      });
+      return { id: updatedUser.id };
+    } else {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          name,
+          email,
+          password,
+          updatedAt: new Date(),
+        },
+      });
+      return { id: updatedUser.id };
+    }
   }
 
   async showByEmail(email: string) {
@@ -101,13 +119,13 @@ export class UserRepository {
   ) {
     function permissionToPermissionId(permission: Permission) {
       const itemResponse = {
-        permissionId: permission.id
+        permissionId: permission.id,
       };
       return itemResponse;
     }
     function roleToRoleIds(role: Role) {
       const itemResponse = {
-        roleId: role.id
+        roleId: role.id,
       };
       return itemResponse;
     }
