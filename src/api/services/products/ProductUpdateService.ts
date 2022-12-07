@@ -61,7 +61,7 @@ export class ProductUpdateService {
       );
     }
 
-    const productUpdated = await this.repository.update({
+    const updatedProduct = await this.repository.update({
       id,
       name,
       description,
@@ -69,6 +69,6 @@ export class ProductUpdateService {
       imageId,
     });
 
-    return productUpdated;
+    return updatedProduct;
   }
 }

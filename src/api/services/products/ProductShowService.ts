@@ -17,12 +17,12 @@ export class ProductShowService {
       throw new AppError("Product id should be a String.");
     }
 
-    const product = await this.repository.showById(product_id);
+    const productResult = await this.repository.showById(product_id);
 
-    if (!product) {
+    if (!productResult) {
       throw new AppError("Product not found.");
     }
 
-    return product;
+    return productResult;
   }
 }

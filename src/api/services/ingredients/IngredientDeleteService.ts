@@ -10,15 +10,15 @@ export class IngredientDeleteService {
 
   async execute(ingredient_id: string) {
     if (!ingredient_id) {
-      throw new AppError("ingredient id is required.");
+      throw new AppError("Ingredient id is required.");
     }
 
     if (typeof ingredient_id != "string") {
-      throw new AppError("ingredient id should be a string.");
+      throw new AppError("Ingredient id should be a string.");
     }
 
-    const deletedItem = await this.repository.delete(ingredient_id);
+    const deletedIngredient = await this.repository.delete(ingredient_id);
 
-    return { id: deletedItem.id };
+    return { id: deletedIngredient.id };
   }
 }

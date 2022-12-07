@@ -17,8 +17,8 @@ export class ProductDeleteService {
       throw new AppError("Product id should be a string.");
     }
 
-    const deletedItem = await this.repository.delete(product_id);
+    const deletedProduct = await this.repository.delete(product_id);
 
-    return { id: deletedItem.id };
+    return deletedProduct;
   }
 }

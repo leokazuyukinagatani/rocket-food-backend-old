@@ -22,11 +22,11 @@ export class IngredientCreateService {
     }
 
     try {
-      const response = await this.repository.create({
+      const createdIngredient = await this.repository.create({
         name,
         description,
       });
-      return response;
+      return createdIngredient;
     } catch (error) {
       throw new AppError("Unable to create a new Ingredient");
     }

@@ -1,14 +1,14 @@
-import { ProductRepository } from "../../repositories/products/ProductRepository";
+import { IngredientRepository } from "../../repositories/ingredients/IngredientRepository";
 
-export class ProductIndexService {
-  repository: ProductRepository;
-  constructor(repository: ProductRepository) {
+export class IngredientIndexService {
+  repository: IngredientRepository;
+  constructor(repository: IngredientRepository) {
     this.repository = repository;
   }
 
   async execute() {
-    const products = await this.repository.index();
+    const ingredients = await this.repository.index();
  
-    return products;
+    return ingredients;
   }
 }

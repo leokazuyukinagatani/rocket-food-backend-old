@@ -36,13 +36,13 @@ export class ProductCreateService {
       );
     }
 
-    const productCreatedId = await this.repository.create({
+    const createdProduct = await this.repository.create({
       name,
       description,
       price,
       imageId,
     });
 
-    return productCreatedId;
+    return createdProduct;
   }
 }

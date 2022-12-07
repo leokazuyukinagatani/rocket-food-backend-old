@@ -8,8 +8,8 @@ export class PermissionShowService {
   }
 
   async execute(permissionsId: string[]) {
-    const permissions = await this.repository.showByIds(permissionsId);
+    const permissionsResult = await this.repository.showByIds(permissionsId);
 
-    return permissions;
+    return permissionsResult;
   }
 }
