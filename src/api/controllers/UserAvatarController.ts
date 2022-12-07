@@ -27,7 +27,7 @@ export class UserAvatarController {
     }
 
     const imageResult = await prisma.image.findFirst({
-      where: { User: user_id },
+      where: { User: user },
     });
 
     if (imageResult) {
