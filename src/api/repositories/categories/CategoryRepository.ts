@@ -1,7 +1,11 @@
 import { prisma } from "../../database/prisma";
 
+export interface ICategoryRepository {
+  name: string;
+  description: string;
+}
 export class CategoryRepository {
-  async create(name: string, description: string) {
+  async create({ name, description }: ICategoryRepository) {
     const newCategory = await prisma.category.create({
       data: {
         name,

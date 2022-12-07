@@ -1,79 +1,73 @@
-import { prisma } from '../../database/prisma'
+import { prisma } from "../../database/prisma";
 
-export interface IProduct{
-  id?:string
-  name:string
-  description:string
-  price:number
-  imageId:string
+export interface IProduct {
+  id?: string;
+  name: string;
+  description: string;
+  price: number;
+  imageId: string;
 }
 export class ProductRepository {
-
   async index() {
-    const productsResult = await prisma.product.findMany()
-    
-    return productsResult
+    const productsResult = await prisma.product.findMany();
+
+    return productsResult;
   }
 
-  async showById(id:string) {
+  async showById(id: string) {
     const productResult = await prisma.product.findFirst({
       where: {
-        id
-      }
-    })
-    return productResult
+        id,
+      },
+    });
+    return productResult;
   }
 
-  async showByName(name:string) {
+  async showByName(name: string) {
     const productResult = await prisma.product.findFirst({
       where: {
-        name
-      }
-    })
+        name,
+      },
+    });
 
-    return productResult
+    return productResult;
   }
 
-
-  async create({ name, description, price, imageId }:IProduct) {
+  async create({ name, description, price, imageId }: IProduct) {
     const newProduct = await prisma.product.create({
       data: {
         name,
         description,
         price,
-        imageId
-      }
-    })
+        imageId,
+      },
+    });
 
-    return { id: newProduct.id }
+    return { id: newProduct.id };
   }
 
-  async update({ id, name, description, price }:IProduct) {
-    
-    const product = await prisma.product.update({
+  async update({ id, name, description, price }: IProduct) {
+    const productUpdated = await prisma.product.update({
       where: {
-        id
+        id,
       },
       data: {
         name,
         description,
-        price
-      }
-    })
+        price,
+      },
+    });
 
-    return product
+    return { id: productUpdated.id };
   }
 
-
-  async delete(id:string) {
+  async delete(id: string) {
     const deletedProduct = await prisma.product.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
 
-    return { id: deletedProduct.id }
+    return { id: deletedProduct.id };
   }
-
 }
-

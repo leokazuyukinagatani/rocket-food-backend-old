@@ -44,18 +44,16 @@ export function is(rolesRoutes: string[]) {
       return response.status(400).json("Usuario não existente");
     }
 
-    const rolesIds = user.roles.map(
-      (role) => role.roleId
-    );
+    const rolesIds = user.roles.map((role) => role.roleId);
     const roles = await roleRepository.showByIds(rolesIds);
 
-    if(!roles) {
-      throw new AppError('Não foi possivel encontrar as roles')
+    if (!roles) {
+      throw new AppError("Não foi possivel encontrar as roles");
     }
     const roleExists = roles
       .map((role) => role.name)
       .some((role) => rolesRoutes.includes(role));
-    
+
     if (!roleExists) {
       return response.status(401).end();
     }

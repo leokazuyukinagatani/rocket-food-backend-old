@@ -21,7 +21,7 @@ export class ProductShowService {
     const product = await this.repository.showById(product_id)
 
     if (!product) {
-      throw new AppError('Produto não encontrado.')
+      throw new AppError('Product not found.')
     }
 
     return product
