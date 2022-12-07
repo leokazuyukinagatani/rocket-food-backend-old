@@ -1,17 +1,16 @@
 import { UserRepository } from "../../repositories/users/UserRepository";
 
-class UserShowService {
+export class UserShowService {
   repository: UserRepository;
 
   constructor(repository: UserRepository) {
     this.repository = repository;
   }
 
-  async execute(email: string) {
-    const userWithEmail = await this.repository.showByEmail(email);
+  async execute(id: string) {
+    const userResult = await this.repository.showById(id);
 
-    return userWithEmail;
+    return userResult;
   }
 }
 
-export { UserShowService };

@@ -8,6 +8,14 @@ export interface IUser {
   password: string;
 }
 
+interface IUserRequest {
+  id: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  imageId?: string | null;
+}
+
 export class UserRepository {
   async create({ name, email, password }: IUser) {
     const createdUser = await prisma.user.create({
@@ -20,7 +28,7 @@ export class UserRepository {
     return { id: createdUser.id };
   }
 
-  async update({ id, name, email, password }: IUser) {
+  async update({ id, name, email, password, imageId }: IUserRequest) {
     const updatedUser = await prisma.user.update({
       where: {
         id,
@@ -30,6 +38,7 @@ export class UserRepository {
         email,
         password,
         updatedAt: new Date(),
+        imageId
       },
     });
 
