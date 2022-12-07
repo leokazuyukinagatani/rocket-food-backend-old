@@ -3,7 +3,7 @@ import { DiskStorage } from "../../providers/DiskStorage";
 import { UserRepository } from "../repositories/users/UserRepository";
 import { UserShowService } from "../services/users/UserShowService";
 import { UserUpdateService } from "../services/users/UserUpdateService";
-
+import { prisma } from '../database/prisma'
 import { AppError } from "../utils/AppError";
 
 export class UserAvatarController {
@@ -27,24 +27,23 @@ export class UserAvatarController {
       throw new AppError('Filename is required', 404);
     }
 
-    await prisma?.image.findFirst(where:{
-      name: avatarFilename 
-    })
+    const imageResult = await prisma.image.findFirst(user_id)
+
 
     
     if(imageResult) {
       await diskStorage.deleteFile(imageResult.filename);
     }
   
-    const filename = await diskStorage.saveFile(avatarFilename,'users')
+    const image = await diskStorage.saveFile(avatarFilename,'users')
     
 
-    const result = await userUpdateService.execute({ id: user.id , imageId:imageResult.id });
+    const userResult = await userUpdateService.execute({ id: user.id , image });
 
-    if (result instanceof AppError) {
-      return response.status(400).json(result.message);
+    if (userResult instanceof AppError) {
+      return response.status(400).json(userResult.message);
     }
 
-    return response.status(201).json(result);
+    return response.status(201).json(userResult);
   }
 }

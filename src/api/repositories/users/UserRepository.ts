@@ -1,4 +1,4 @@
-import { Image, Permission, Role } from "@prisma/client";
+import { Permission, Role } from "@prisma/client";
 import { prisma } from "../../database/prisma";
 
 export interface IUser {
@@ -8,12 +8,17 @@ export interface IUser {
   password: string;
 }
 
+interface IImage {
+  filename: string;
+  url: string;
+}
+
 interface IUserRequest {
   id: string;
   name?: string;
   email?: string;
   password?: string;
-  image?: Image;
+  image?: IImage;
 }
 
 export class UserRepository {

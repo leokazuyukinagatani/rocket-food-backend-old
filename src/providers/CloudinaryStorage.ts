@@ -40,7 +40,7 @@ export class CloudinaryStorage {
         }
       }
     );
-
-    return response;
+    const { public_id, url } = response;
+    return { filename: public_id, url };
   }
 }

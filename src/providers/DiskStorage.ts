@@ -15,7 +15,7 @@ export class DiskStorage {
 
     await this.deleteFile(file);
     console.log(response);
-    return response.url;
+    return response;
   }
 
   async deleteFile(file: string) {

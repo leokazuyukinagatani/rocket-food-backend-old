@@ -5,10 +5,10 @@ import { UserShowByEmailService } from "./UserShowByEmailService";
 import { UserShowService } from "./UserShowService";
 
 interface Image {
-  id: string;
   filename: string;
   url: string;
 }
+
 interface UserRequest {
   id: string;
   name?: string;
