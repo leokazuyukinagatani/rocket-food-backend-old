@@ -36,7 +36,7 @@ E-commerce para restaurantes desenvolvido como projeto final do curso Explorer d
 
 ### Categoria
 - criar categoria  ✅
-- listar categorias 
+- listar categorias  ✅
 
 ### Ingredientes
 - criar ingrediente

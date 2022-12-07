@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CategoryRepository } from "../repositories/categories/CategoryRepository";
 import { CategoryCreateService } from "../services/categories/CategoryCreateService";
+import { CategoryIndexService } from "../services/categories/CategoryIndexService";
 
 export class CategoriesController {
 
@@ -32,9 +33,12 @@ export class CategoriesController {
   }
 
   async index( request:Request, response:Response ){
-    
-    return console.log("not implement")
+    const categoryRepository = new CategoryRepository()
+    const categoryIndexService = new CategoryIndexService(categoryRepository)
 
+    const categories = await categoryIndexService.execute()
+
+    return response.status(200).json(categories)
   }
 
   async update( request:Request, response:Response ){

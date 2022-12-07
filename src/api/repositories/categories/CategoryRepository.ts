@@ -19,4 +19,10 @@ export class CategoryRepository {
     });
     return category;
   }
+
+  async index() {
+    const categories = await prisma.category.findMany();
+
+    return categories;
+  }
 }
