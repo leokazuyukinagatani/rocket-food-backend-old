@@ -2,13 +2,13 @@ import { prisma } from "../../database/prisma";
 
 export class CategoryRepository {
   async create(name: string, description: string) {
-    const category = await prisma.category.create({
+    const newCategory = await prisma.category.create({
       data: {
         name,
         description,
       },
     });
-    return category;
+    return newCategory;
   }
 
   async showByName(name: string) {

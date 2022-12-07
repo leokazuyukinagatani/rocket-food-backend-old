@@ -10,28 +10,28 @@ export interface IProduct{
 export class ProductRepository {
 
   async index() {
-    const products = await prisma.product.findMany()
+    const productsResult = await prisma.product.findMany()
     
-    return products
+    return productsResult
   }
 
   async findById(id:string) {
-    const product = await prisma.product.findFirst({
+    const productResult = await prisma.product.findFirst({
       where: {
         id
       }
     })
-    return product
+    return productResult
   }
 
   async findByName(name:string) {
-    const product = await prisma.product.findFirst({
+    const productResult = await prisma.product.findFirst({
       where: {
         name
       }
     })
 
-    return product
+    return productResult
   }
 
 
