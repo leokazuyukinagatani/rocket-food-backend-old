@@ -7,6 +7,6 @@ const usersController = new UsersController();
 
 usersRoutes.post("/", usersController.create);
 usersRoutes.get("/", ensureAuthenticated, usersController.show);
-usersRoutes.post("/acl", usersController.access);
+usersRoutes.post("/acl", ensureAuthenticated, usersController.access);
 
 export { usersRoutes };

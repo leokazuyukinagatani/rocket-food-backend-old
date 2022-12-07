@@ -10,18 +10,18 @@ export interface IUser {
 
 export class UserRepository {
   async create({ name, email, password }: IUser) {
-    const newUser = await prisma.user.create({
+    const createdUser = await prisma.user.create({
       data: {
         email,
         name,
         password,
       },
     });
-    return newUser.id;
+    return { id: createdUser.id };
   }
 
   async update({ id, name, email, password }: IUser) {
-    const userId = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id,
       },
@@ -33,29 +33,29 @@ export class UserRepository {
       },
     });
 
-    return userId;
+    return { id: updatedUser.id };
   }
 
   async showByEmail(email: string) {
-    const user = await prisma.user.findFirst({
+    const userResponse = await prisma.user.findFirst({
       where: {
         email,
       },
     });
-    return user;
+    return userResponse;
   }
 
   async showById(id: string) {
-    const user = await prisma.user.findFirst({
+    const userResponse = await prisma.user.findFirst({
       where: {
         id,
       },
     });
-    return user;
+    return userResponse;
   }
 
   async showByIdWithPermissions(id: string) {
-    const user = await prisma.user.findFirst({
+    const userResponse = await prisma.user.findFirst({
       where: {
         id,
       },
@@ -67,10 +67,10 @@ export class UserRepository {
         },
       },
     });
-    return user;
+    return userResponse;
   }
   async showByIdWithRoles(id: string) {
-    const user = await prisma.user.findFirst({
+    const userResponse = await prisma.user.findFirst({
       where: {
         id,
       },
@@ -82,7 +82,7 @@ export class UserRepository {
         },
       },
     });
-    return user;
+    return userResponse;
   }
 
   async updateACL(
@@ -90,27 +90,23 @@ export class UserRepository {
     permissionExists: Permission[],
     roleExists: Role[]
   ) {
-    function permissionIds(item: Permission) {
-      const permissionId = item.id;
+    function permissionToPermissionId(permission: Permission) {
       const itemResponse = {
-        permissionId,
+        permissionId: permission.id
       };
       return itemResponse;
     }
-    function roleIds(item: Role) {
-      const roleId = item.id;
+    function roleToRoleIds(role: Role) {
       const itemResponse = {
-        roleId,
+        roleId: role.id
       };
       return itemResponse;
     }
 
-    const permissionsIds = permissionExists.map(permissionIds);
-    const rolesIds = roleExists.map(roleIds);
+    const permissionsIds = permissionExists.map(permissionToPermissionId);
+    const rolesIds = roleExists.map(roleToRoleIds);
 
-    // console.log("AUX =======>",permissionsIds,"<======AUX")
-
-    const user = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id,
       },
@@ -128,23 +124,6 @@ export class UserRepository {
       },
     });
 
-    // await prisma.usersOnPermissions.createMany({
-    //   data:{
-    //     userId: id,
-    //     permissionId
-    //   }
-    // })
-
-    // const permissionRepository = new PermissionRepository()
-    // const userRepository = new UserRepository()
-    // const permissionACLRepository = new PermissionACLRepository()
-
-    // const permissionAccessControlListService = new PermissionAccessControlListService(permissionRepository, userRepository, permissionACLRepository)
-
-    // async function auxFunction(item){
-    //   permissionAccessControlListService.execute(item)
-    // }
-
-    return user;
+    return { id: updatedUser.id };
   }
 }
