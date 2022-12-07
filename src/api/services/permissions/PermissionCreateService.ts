@@ -1,33 +1,29 @@
-import { Permission } from "@prisma/client"
-import { PermissionRepository } from "../../repositories/permissions/PermissionRepository"
-import { AppError } from "../../utils/AppError"
+import { Permission } from "@prisma/client";
+import { PermissionRepository } from "../../repositories/permissions/PermissionRepository";
+import { AppError } from "../../utils/AppError";
 
 interface PermissionRequest {
-  name: string
-  description: string
+  name: string;
+  description: string;
 }
 
 export class PermissionCreateService {
-  repository:PermissionRepository
- 
-  constructor(repository:PermissionRepository) {
-    this.repository = repository
+  repository: PermissionRepository;
+
+  constructor(repository: PermissionRepository) {
+    this.repository = repository;
   }
   async execute({ name, description }: PermissionRequest): Promise<Permission> {
-
-    
-    const permissionExist = await this.repository.showByName(name)
-    if(permissionExist){
-      throw new AppError("Permission already exists",403)
+    const permissionExist = await this.repository.showByName(name);
+    if (permissionExist) {
+      throw new AppError("Permission already exists", 403);
     }
-    
 
     try {
-      const permission = await this.repository.create(name, description)
-      return permission
+      const permission = await this.repository.create(name, description);
+      return permission;
     } catch (error) {
-      throw new AppError('Não foi possivel criar uma nova Role');
+      throw new AppError("Não foi possivel criar uma nova Role");
     }
-    
   }
 }

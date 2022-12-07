@@ -1,33 +1,32 @@
-import { Category } from "@prisma/client"
-import { CategoryRepository } from "../../repositories/categories/CategoryRepository"
-import { AppError } from "../../utils/AppError"
+import { Category } from "@prisma/client";
+import { CategoryRepository } from "../../repositories/categories/CategoryRepository";
+import { AppError } from "../../utils/AppError";
 
 interface CategoryRequest {
-  name: string
-  description: string
+  name: string;
+  description: string;
 }
 
 export class CategoryCreateService {
-  repository:CategoryRepository
- 
-  constructor(repository:CategoryRepository) {
-    this.repository = repository
-  }
-  async execute({ name, description }: CategoryRequest): Promise<Category | AppError> {
+  repository: CategoryRepository;
 
-    
-    const categoryExist = await this.repository.showByName(name)
-    if(categoryExist){
-      throw new AppError("Category already exists",403)
+  constructor(repository: CategoryRepository) {
+    this.repository = repository;
+  }
+  async execute({
+    name,
+    description,
+  }: CategoryRequest): Promise<Category | AppError> {
+    const categoryExist = await this.repository.showByName(name);
+    if (categoryExist) {
+      throw new AppError("Category already exists", 403);
     }
-    
 
     try {
-      const category = await this.repository.create(name, description)
-      return category
+      const category = await this.repository.create({ name, description });
+      return category;
     } catch (error) {
-      throw new AppError('Não foi possivel criar uma nova Category');
+      throw new AppError("Não foi possivel criar uma nova Category");
     }
-    
   }
 }

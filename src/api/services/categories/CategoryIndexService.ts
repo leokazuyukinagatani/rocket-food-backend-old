@@ -1,15 +1,14 @@
-import { CategoryRepository } from "../../repositories/categories/CategoryRepository"
+import { CategoryRepository } from "../../repositories/categories/CategoryRepository";
 
 export class CategoryIndexService {
-  repository:CategoryRepository
-  constructor(repository:CategoryRepository) {
-    this.repository = repository
+  repository: CategoryRepository;
+  constructor(repository: CategoryRepository) {
+    this.repository = repository;
   }
 
   async execute() {
-    const categories = await this.repository.index()
+    const categories = await this.repository.index();
 
-    return categories
+    return categories;
   }
 }
-

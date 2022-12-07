@@ -22,13 +22,12 @@ export class ACLCreateRolePermissionService {
   }
   async execute({
     roleId,
-    permissions
+    permissions,
   }: IRolePermissionRequest): Promise<Role | AppError> {
     const permissionShowService = new PermissionShowService(
       this.permissionRepository
     );
- 
- 
+
     const permissionExists = await permissionShowService.execute(permissions);
 
     function permissionIds(item: Permission) {

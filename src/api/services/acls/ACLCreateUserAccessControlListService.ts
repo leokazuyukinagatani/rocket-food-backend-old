@@ -8,44 +8,56 @@ import { RoleShowService } from "../roles/RoleShowService";
 import { UserShowService } from "../users/UserShowService";
 
 interface UserACLRequest {
-  userEmail: string
-  roles: string[]
-  permissions: string[]
+  userEmail: string;
+  roles: string[];
+  permissions: string[];
 }
 
 export class ACLCreateUserAccessControlListService {
-  userRepository: UserRepository
-  permissionRepository: PermissionRepository
-  roleRepository: RoleRepository
+  userRepository: UserRepository;
+  permissionRepository: PermissionRepository;
+  roleRepository: RoleRepository;
 
-  constructor(userRepository:UserRepository, permissionRepository:PermissionRepository, roleRepository:RoleRepository){
-    this.userRepository = userRepository
-    this.permissionRepository = permissionRepository
-    this.roleRepository = roleRepository
-  
+  constructor(
+    userRepository: UserRepository,
+    permissionRepository: PermissionRepository,
+    roleRepository: RoleRepository
+  ) {
+    this.userRepository = userRepository;
+    this.permissionRepository = permissionRepository;
+    this.roleRepository = roleRepository;
   }
-  
-  async execute({userEmail, roles, permissions}:UserACLRequest): Promise<User | AppError> {
-    const userShowService = new UserShowService(this.userRepository) 
-    const user = await userShowService.execute(userEmail)
-    console.log(user)
-    if(!user) {
-      throw new AppError('O usuário não existe')
+
+  async execute({
+    userEmail,
+    roles,
+    permissions,
+  }: UserACLRequest): Promise<User | AppError> {
+    const userShowService = new UserShowService(this.userRepository);
+    const user = await userShowService.execute(userEmail);
+    console.log(user);
+    if (!user) {
+      throw new AppError("O usuário não existe");
     }
 
-    const permissionShowService = new PermissionShowService(this.permissionRepository)
-    const permissionExists = await permissionShowService.execute(permissions)
+    const permissionShowService = new PermissionShowService(
+      this.permissionRepository
+    );
+    const permissionExists = await permissionShowService.execute(permissions);
 
-    const roleShowService = new RoleShowService(this.roleRepository)
-    const roleExists = await roleShowService.execute(roles)
+    const roleShowService = new RoleShowService(this.roleRepository);
+    const roleExists = await roleShowService.execute(roles);
 
-    if(roleExists){
-       await this.userRepository.updateACL(user.id, permissionExists, roleExists)
+    if (roleExists) {
+      await this.userRepository.updateACL(
+        user.id,
+        permissionExists,
+        roleExists
+      );
     }
 
-    console.log(permissionExists)
-    
-    return user
+    console.log(permissionExists);
 
+    return user;
   }
 }

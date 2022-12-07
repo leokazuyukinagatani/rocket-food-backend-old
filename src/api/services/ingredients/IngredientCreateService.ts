@@ -15,10 +15,7 @@ export class IngredientCreateService {
     this.repository = repository;
   }
 
-  async execute({
-    name,
-    description
-  }: IngredientRequest) {
+  async execute({ name, description }: IngredientRequest) {
     const ingredientExist = await this.repository.showByName(name);
     if (ingredientExist) {
       throw new AppError("Ingredient already exists", 403);
@@ -27,7 +24,7 @@ export class IngredientCreateService {
     try {
       const response = await this.repository.create({
         name,
-        description
+        description,
       });
       return response;
     } catch (error) {

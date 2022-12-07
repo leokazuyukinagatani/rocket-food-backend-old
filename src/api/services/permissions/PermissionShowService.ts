@@ -1,17 +1,15 @@
-import { PermissionRepository } from '../../repositories/permissions/PermissionRepository';
+import { PermissionRepository } from "../../repositories/permissions/PermissionRepository";
 
 export class PermissionShowService {
-  repository: PermissionRepository
+  repository: PermissionRepository;
 
-  constructor(repository:PermissionRepository) {
-    this.repository = repository
+  constructor(repository: PermissionRepository) {
+    this.repository = repository;
   }
-  
 
-  async execute(permissionsId:string[]) {
-    const permissions = await this.repository.showByIds(permissionsId)
+  async execute(permissionsId: string[]) {
+    const permissions = await this.repository.showByIds(permissionsId);
 
-    return permissions
+    return permissions;
   }
 }
-

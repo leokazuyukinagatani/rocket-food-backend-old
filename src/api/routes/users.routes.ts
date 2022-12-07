@@ -1,15 +1,12 @@
 import { Router } from "express";
-import { UsersController } from '../controllers/UsersController'
+import { UsersController } from "../controllers/UsersController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
-const usersRoutes = Router()
-const usersController = new UsersController()
+const usersRoutes = Router();
+const usersController = new UsersController();
 
+usersRoutes.post("/", usersController.create);
+usersRoutes.get("/", ensureAuthenticated, usersController.show);
+usersRoutes.post("/acl", usersController.access);
 
-usersRoutes.post('/', usersController.create)
-usersRoutes.get('/',ensureAuthenticated, usersController.show)
-usersRoutes.post('/acl', usersController.access)
-
-export {
-  usersRoutes
-}
+export { usersRoutes };

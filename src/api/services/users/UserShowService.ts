@@ -1,21 +1,17 @@
-import { UserRepository } from '../../repositories/users/UserRepository';
+import { UserRepository } from "../../repositories/users/UserRepository";
 
 class UserShowService {
-  repository: UserRepository
+  repository: UserRepository;
 
-  constructor(repository:UserRepository) {
-    this.repository = repository
+  constructor(repository: UserRepository) {
+    this.repository = repository;
   }
-  
 
-  async execute(email:string) {
- 
-    const userWithEmail = await this.repository.showByEmail(email)
+  async execute(email: string) {
+    const userWithEmail = await this.repository.showByEmail(email);
 
-    return userWithEmail
+    return userWithEmail;
   }
 }
 
-export {
-  UserShowService
-}
+export { UserShowService };
