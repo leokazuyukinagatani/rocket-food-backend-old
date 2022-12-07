@@ -8,7 +8,7 @@ export class IngredientShowService {
     this.repository = repository;
   }
 
-  async execute(ingredient_id: String) {
+  async execute(ingredient_id: string) {
     if (!ingredient_id) {
       throw new AppError("Ingredient id is required.");
     }

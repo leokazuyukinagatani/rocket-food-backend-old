@@ -23,8 +23,8 @@ export class CategoryCreateService {
     }
 
     try {
-      const category = await this.repository.create({ name, description });
-      return category;
+      const categoryResult = await this.repository.create({ name, description });
+      return categoryResult;
     } catch (error) {
       throw new AppError("Unable to create a new Category");
     }

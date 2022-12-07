@@ -7,8 +7,8 @@ export class CategoryIndexService {
   }
 
   async execute() {
-    const categories = await this.repository.index();
+    const categoriesResult = await this.repository.index();
 
-    return categories;
+    return categoriesResult;
   }
 }

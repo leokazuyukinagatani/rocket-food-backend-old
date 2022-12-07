@@ -21,14 +21,15 @@ export class IngredientCreateService {
       throw new AppError("Ingredient already exists", 403);
     }
 
-    try {
-      const createdIngredient = await this.repository.create({
-        name,
-        description,
-      });
-      return createdIngredient;
-    } catch (error) {
+    const createdIngredient = await this.repository.create({
+      name,
+      description,
+    });
+
+    if (!createdIngredient) {
       throw new AppError("Unable to create a new Ingredient");
     }
+
+    return createdIngredient;
   }
 }

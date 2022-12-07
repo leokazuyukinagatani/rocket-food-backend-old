@@ -19,10 +19,10 @@ export class RoleCreateService {
       throw new AppError("Role already exists", 403);
     }
 
-    const role = await this.repository.create(name, description);
-    if (!role) {
+    const roleResult = await this.repository.create(name, description);
+    if (!roleResult) {
       throw new AppError("Failed to create a new role");
     }
-    return role;
+    return roleResult;
   }
 }

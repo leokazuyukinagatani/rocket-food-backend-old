@@ -39,11 +39,11 @@ E-commerce para restaurantes desenvolvido como projeto final do curso Explorer d
 - listar categorias  ✅
 
 ### Ingredientes
-- criar ingrediente
-- deletar ingrediente
-- listar ingredientes
-- atualizar ingrediente
-- colocar foto do ingrediente
+- criar ingrediente  ✅
+- deletar ingrediente ✅
+- listar ingredientes ✅
+- atualizar ingrediente ✅
+- colocar foto do ingrediente 
 
 ### Pedido
 - criar pedido
