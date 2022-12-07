@@ -3,16 +3,16 @@ import { prisma } from "../../database/prisma";
 
 export class RoleRepository {
   async create(name: string, description: string) {
-    const roleCreated = await prisma.role.create({
+    const createdRole = await prisma.role.create({
       data: {
         name,
         description,
       },
     });
-    return { id: roleCreated.id };
+    return { id: createdRole.id };
   }
   async update(roleId: string, permissionsIds: { permissionId: string }[]) {
-    const roleUpdated = await prisma.role.update({
+    const updatedRole = await prisma.role.update({
       where: {
         id: roleId,
       },
@@ -24,23 +24,23 @@ export class RoleRepository {
         },
       },
     });
-    return { id: roleUpdated.id };
+    return { id: updatedRole.id };
   }
   async showByName(name: string) {
-    const role = await prisma.role.findFirst({
+    const roleResult = await prisma.role.findFirst({
       where: {
         name,
       },
     });
-    return role;
+    return roleResult;
   }
   async showById(roleId: string) {
-    const role = await prisma.role.findFirst({
+    const roleResult = await prisma.role.findFirst({
       where: {
         id: roleId,
       },
     });
-    return role;
+    return roleResult;
   }
   async showByIds(rolesId: string[]) {
     let rolesResult: Role[] = [];

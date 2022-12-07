@@ -37,25 +37,25 @@ export class UserRepository {
   }
 
   async showByEmail(email: string) {
-    const userResponse = await prisma.user.findFirst({
+    const userResult = await prisma.user.findFirst({
       where: {
         email,
       },
     });
-    return userResponse;
+    return userResult;
   }
 
   async showById(id: string) {
-    const userResponse = await prisma.user.findFirst({
+    const userResult = await prisma.user.findFirst({
       where: {
         id,
       },
     });
-    return userResponse;
+    return userResult;
   }
 
   async showByIdWithPermissions(id: string) {
-    const userResponse = await prisma.user.findFirst({
+    const userResult = await prisma.user.findFirst({
       where: {
         id,
       },
@@ -67,10 +67,10 @@ export class UserRepository {
         },
       },
     });
-    return userResponse;
+    return userResult;
   }
   async showByIdWithRoles(id: string) {
-    const userResponse = await prisma.user.findFirst({
+    const userResult = await prisma.user.findFirst({
       where: {
         id,
       },
@@ -82,7 +82,7 @@ export class UserRepository {
         },
       },
     });
-    return userResponse;
+    return userResult;
   }
 
   async updateACL(

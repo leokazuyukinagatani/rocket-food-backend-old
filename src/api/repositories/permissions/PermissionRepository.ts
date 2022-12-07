@@ -3,23 +3,23 @@ import { prisma } from "../../database/prisma";
 
 export class PermissionRepository {
   async create(name: string, description: string) {
-    const newPermission = await prisma.permission.create({
+    const createdPermission = await prisma.permission.create({
       data: {
         name,
         description,
       },
     });
-    return newPermission;
+    return createdPermission;
   }
 
   async showByName(name: string) {
-    const permission = await prisma.permission.findFirst({
+    const permissionResult = await prisma.permission.findFirst({
       where: {
         name,
       },
     });
 
-    return permission;
+    return permissionResult;
   }
 
   async showByIds(permissions: string[]) {

@@ -7,40 +7,40 @@ export interface IIngredient {
 }
 export class IngredientRepository {
   async index() {
-    const ingredients = await prisma.ingredient.findMany();
+    const ingredientsResult = await prisma.ingredient.findMany();
 
-    return ingredients;
+    return ingredientsResult;
   }
 
   async showById(id: string) {
-    const ingredient = await prisma.ingredient.findFirst({
+    const ingredientResult = await prisma.ingredient.findFirst({
       where: {
         id,
       },
     });
-    return ingredient;
+    return ingredientResult;
   }
 
   async showByName(name: string) {
-    const ingredient = await prisma.ingredient.findFirst({
+    const ingredientResult = await prisma.ingredient.findFirst({
       where: {
         name,
       },
     });
 
-    return ingredient;
+    return ingredientResult;
   }
 
   async create({ name, description }: IIngredient) {
-    const newIngredient = await prisma.ingredient.create({
+    const createdIngredient = await prisma.ingredient.create({
       data: { name, description },
     });
 
-    return { id: newIngredient.id };
+    return { id: createdIngredient.id };
   }
 
   async update({ id, name, description }: IIngredient) {
-    const ingredient = await prisma.ingredient.update({
+    const updatedIngredient = await prisma.ingredient.update({
       where: {
         id,
       },
@@ -50,7 +50,7 @@ export class IngredientRepository {
       },
     });
 
-    return ingredient;
+    return updatedIngredient;
   }
 
   async delete(id: string) {

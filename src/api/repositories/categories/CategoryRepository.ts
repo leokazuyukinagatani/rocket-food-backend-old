@@ -6,27 +6,27 @@ export interface ICategoryRepository {
 }
 export class CategoryRepository {
   async create({ name, description }: ICategoryRepository) {
-    const newCategory = await prisma.category.create({
+    const createdCategory = await prisma.category.create({
       data: {
         name,
         description,
       },
     });
-    return newCategory;
+    return createdCategory;
   }
 
   async showByName(name: string) {
-    const category = await prisma.category.findFirst({
+    const categoryResult = await prisma.category.findFirst({
       where: {
         name,
       },
     });
-    return category;
+    return categoryResult;
   }
 
   async index() {
-    const categories = await prisma.category.findMany();
+    const categoriesResult = await prisma.category.findMany();
 
-    return categories;
+    return categoriesResult;
   }
 }

@@ -34,7 +34,7 @@ export class ProductRepository {
   }
 
   async create({ name, description, price, imageId }: IProduct) {
-    const newProduct = await prisma.product.create({
+    const createdProduct = await prisma.product.create({
       data: {
         name,
         description,
@@ -43,11 +43,11 @@ export class ProductRepository {
       },
     });
 
-    return { id: newProduct.id };
+    return { id: createdProduct.id };
   }
 
   async update({ id, name, description, price }: IProduct) {
-    const productUpdated = await prisma.product.update({
+    const updatedProduct = await prisma.product.update({
       where: {
         id,
       },
@@ -58,7 +58,7 @@ export class ProductRepository {
       },
     });
 
-    return { id: productUpdated.id };
+    return { id: updatedProduct.id };
   }
 
   async delete(id: string) {
