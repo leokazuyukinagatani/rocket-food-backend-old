@@ -18,7 +18,7 @@ export class ProductShowService {
       throw new AppError('Product id should be a String.')
     }
 
-    const product = await this.repository.findById(product_id)
+    const product = await this.repository.showById(product_id)
 
     if (!product) {
       throw new AppError('Produto não encontrado.')

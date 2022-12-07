@@ -13,7 +13,7 @@ export class CategoryCreateService {
   constructor(repository:CategoryRepository) {
     this.repository = repository
   }
-  async execute({ name, description }: CategoryRequest): Promise<Category> {
+  async execute({ name, description }: CategoryRequest): Promise<Category | AppError> {
 
     
     const categoryExist = await this.repository.showByName(name)

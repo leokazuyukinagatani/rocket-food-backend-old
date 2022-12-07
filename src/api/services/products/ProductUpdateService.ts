@@ -17,7 +17,7 @@ export class ProductUpdateService {
       throw new AppError('Id do produto deve ser um número.')
     }
 
-    const product = await this.repository.findById(id)
+    const product = await this.repository.showById(id)
 
     if (!product) {
       throw new AppError('Produto não encontrado.')
@@ -51,7 +51,7 @@ export class ProductUpdateService {
       throw new AppError('Imagem do produto é obrigatória.')
     }
 
-    const productWithName = await this.repository.findByName(name)
+    const productWithName = await this.repository.showByName(name)
 
     if (productWithName && productWithName.id != id) {
       throw new AppError('Já existe um produto cadastrado com esse nome.')

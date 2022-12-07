@@ -15,7 +15,7 @@ export class ProductRepository {
     return productsResult
   }
 
-  async findById(id:string) {
+  async showById(id:string) {
     const productResult = await prisma.product.findFirst({
       where: {
         id
@@ -24,7 +24,7 @@ export class ProductRepository {
     return productResult
   }
 
-  async findByName(name:string) {
+  async showByName(name:string) {
     const productResult = await prisma.product.findFirst({
       where: {
         name

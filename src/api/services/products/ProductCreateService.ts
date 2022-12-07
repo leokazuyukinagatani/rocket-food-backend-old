@@ -25,7 +25,7 @@ export class ProductCreateService {
     //   throw new AppError('Imagem do produto é obrigatória.')
     // }
 
-    const productWithName = await this.repository.findByName(name)
+    const productWithName = await this.repository.showByName(name)
 
     if (productWithName) {
       throw new AppError('Já existe um produto cadastrado com esse nome.')
