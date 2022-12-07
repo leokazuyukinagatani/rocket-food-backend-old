@@ -14,29 +14,29 @@ E-commerce para restaurantes desenvolvido como projeto final do curso Explorer d
 
 ## Funcionalidades
 ### Usuário
-- criar usuário
-- buscar usuário por email
-- colocar foto de perfil
+- criar usuário ✅
+- buscar usuário por email ✅
+- colocar foto de perfil 
 
 ### Autenticação
-- JWT
+- JWT ✅
 
 ### ACL
-- criar role
-- criar permissão
-- atribuir roles e permissões a um usuário
+- criar role ✅
+- criar permissão ✅
+- atribuir roles e permissões a um usuário ✅
 
 ### Produto
-- criar produto
-- deletar produto
-- listar produtos
-- atualizar produto
+- criar produto ✅
+- deletar produto ✅
+- listar produtos ✅
+- atualizar produto ✅
 - favoritar um produto
 - colocar foto do produto
 
 ### Categoria
-- criar categoria
-- listar categorias
+- criar categoria  ✅
+- listar categorias 
 
 ### Ingredientes
 - criar ingrediente
