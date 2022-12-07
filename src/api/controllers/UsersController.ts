@@ -4,7 +4,7 @@ import { RoleRepository } from "../repositories/roles/RoleRepository";
 import { UserRepository } from "../repositories/users/UserRepository";
 import { ACLCreateUserAccessControlListService } from "../services/acls/ACLCreateUserAccessControlListService";
 import { UserCreateService } from "../services/users/UserCreateService";
-import { UserShowService } from "../services/users/UserShowService";
+import { UserShowByEmailService } from "../services/users/UserShowByEmailService";
 
 export class UsersController {
   async create(request: Request, response: Response) {
@@ -26,9 +26,9 @@ export class UsersController {
     const { email } = request.body;
 
     const userRepository = new UserRepository();
-    const userShowService = new UserShowService(userRepository);
+    const userShowByEmailService = new UserShowByEmailService(userRepository);
 
-    const user = await userShowService.execute(email);
+    const user = await userShowByEmailService.execute(email);
 
     return response.status(200).json({ user });
   }
