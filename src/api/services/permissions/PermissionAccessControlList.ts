@@ -27,14 +27,14 @@ export class PermissionAccessControlListService {
     const user = await this.userRepository.showById(userId);
 
     if (!user) {
-      throw new AppError("Usuário não existe!");
+      throw new AppError("User does not exist!");
     }
 
     const permissionExists = await this.permissionRepository.showByName(
       permission
     );
     if (!permissionExists) {
-      throw new AppError("Permissões não existente!");
+      throw new AppError("permissions not found!");
     }
 
     await this.permissionACLRepository.create(user.id, permissionExists.id);

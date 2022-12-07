@@ -23,7 +23,7 @@ export class ACLCreateRolePermissionService {
   async execute({
     roleId,
     permissions,
-  }: IRolePermissionRequest): Promise<Role | AppError> {
+  }: IRolePermissionRequest): Promise<{ id: string } | AppError> {
     const permissionShowService = new PermissionShowService(
       this.permissionRepository
     );
@@ -43,7 +43,7 @@ export class ACLCreateRolePermissionService {
     const roleExist = await this.roleRepository.showById(roleId);
 
     if (!roleExist) {
-      throw new AppError("A role não existe");
+      throw new AppError("Role does not exist");
     }
     const role = await this.roleRepository.update(roleExist.id, permissionsIds);
     return role;

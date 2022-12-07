@@ -9,7 +9,7 @@ export class RoleShowService {
 
   async execute(rolesId: string[]) {
     const roles = await this.repository.showByIds(rolesId);
-
+    
     return roles;
   }
 }

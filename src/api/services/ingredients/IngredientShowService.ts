@@ -10,17 +10,17 @@ export class IngredientShowService {
 
   async execute(ingredient_id: String) {
     if (!ingredient_id) {
-      throw new AppError("ingredient id is required.");
+      throw new AppError("Ingredient id is required.");
     }
 
     if (typeof ingredient_id != "string" || ingredient_id === " ") {
-      throw new AppError("ingredient id should be a String.");
+      throw new AppError("Ingredient id should be a String.");
     }
 
     const ingredient = await this.repository.showById(ingredient_id);
 
     if (!ingredient) {
-      throw new AppError("Produto não encontrado.");
+      throw new AppError("Ingredient not found");
     }
 
     return ingredient;

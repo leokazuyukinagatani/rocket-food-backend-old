@@ -8,7 +8,7 @@ export class ProductIndexService {
 
   async execute() {
     const products = await this.repository.index();
-
+ 
     return products;
   }
 }

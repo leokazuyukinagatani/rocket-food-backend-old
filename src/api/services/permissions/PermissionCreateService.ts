@@ -23,7 +23,7 @@ export class PermissionCreateService {
       const permission = await this.repository.create(name, description);
       return permission;
     } catch (error) {
-      throw new AppError("Não foi possivel criar uma nova Role");
+      throw new AppError("Unable to create a new role");
     }
   }
 }

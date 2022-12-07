@@ -32,12 +32,11 @@ export class ACLCreateUserAccessControlListService {
     userEmail,
     roles,
     permissions,
-  }: UserACLRequest): Promise<User | AppError> {
+  }: UserACLRequest): Promise<{ id: string } | AppError> {
     const userShowService = new UserShowService(this.userRepository);
     const user = await userShowService.execute(userEmail);
-    console.log(user);
     if (!user) {
-      throw new AppError("O usuário não existe");
+      throw new AppError("User does not exist");
     }
 
     const permissionShowService = new PermissionShowService(
@@ -48,16 +47,15 @@ export class ACLCreateUserAccessControlListService {
     const roleShowService = new RoleShowService(this.roleRepository);
     const roleExists = await roleShowService.execute(roles);
 
-    if (roleExists) {
-      await this.userRepository.updateACL(
-        user.id,
-        permissionExists,
-        roleExists
-      );
+    if (!roleExists) {
+      throw new AppError("Roles is not exists");
     }
+    const updatedUser = await this.userRepository.updateACL(
+      user.id,
+      permissionExists,
+      roleExists
+    );
 
-    console.log(permissionExists);
-
-    return user;
+    return updatedUser;
   }
 }

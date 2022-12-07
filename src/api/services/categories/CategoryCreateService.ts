@@ -16,7 +16,7 @@ export class CategoryCreateService {
   async execute({
     name,
     description,
-  }: CategoryRequest): Promise<Category | AppError> {
+  }: CategoryRequest): Promise<{ id: string } | AppError> {
     const categoryExist = await this.repository.showByName(name);
     if (categoryExist) {
       throw new AppError("Category already exists", 403);
@@ -26,7 +26,7 @@ export class CategoryCreateService {
       const category = await this.repository.create({ name, description });
       return category;
     } catch (error) {
-      throw new AppError("Não foi possivel criar uma nova Category");
+      throw new AppError("Unable to create a new Category");
     }
   }
 }

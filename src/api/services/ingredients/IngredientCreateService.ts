@@ -28,7 +28,7 @@ export class IngredientCreateService {
       });
       return response;
     } catch (error) {
-      throw new AppError("Não foi possivel criar uma novo Ingrediente");
+      throw new AppError("Unable to create a new Ingredient");
     }
   }
 }

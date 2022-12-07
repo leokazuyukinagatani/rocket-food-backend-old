@@ -12,7 +12,7 @@ export class CategoryRepository {
         description,
       },
     });
-    return createdCategory;
+    return { id: createdCategory.id };
   }
 
   async showByName(name: string) {

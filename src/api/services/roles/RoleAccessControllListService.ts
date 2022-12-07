@@ -27,12 +27,12 @@ export class RoleAccessControlListService {
     const user = await this.userRepository.showById(userId);
 
     if (!user) {
-      throw new AppError("Usuário não existe!");
+      throw new AppError("User does not exist!");
     }
 
     const roleExists = await this.roleRepository.showByName(role);
     if (!roleExists) {
-      throw new AppError("Permissões não existente!");
+      throw new AppError("Permissions not found!");
     }
 
     await this.roleACLRepository.create(user.id, roleExists.id);
