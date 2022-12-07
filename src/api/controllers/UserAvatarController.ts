@@ -27,7 +27,7 @@ export class UserAvatarController {
     }
 
     const imageResult = await prisma.image.findFirst({
-      where: { User: user },
+      where: { filename: avatarFilename },
     });
 
     if (imageResult) {
