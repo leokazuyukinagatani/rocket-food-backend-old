@@ -4,8 +4,13 @@ import { AppError } from "../utils/AppError";
 import { authConfig } from "../configs/auth";
 import { Request, Response, NextFunction } from "express";
 
+export interface CustomRequest extends Request {
+  user?: {
+    id: string | undefined | (() => string);
+  }
+}
 export function ensureAuthenticated(
-  request: Request,
+  request: CustomRequest,
   response: Response,
   next: NextFunction
 ) {
@@ -19,8 +24,8 @@ export function ensureAuthenticated(
 
   try {
     const { sub: user_id } = verify(token, authConfig.jwt.secret);
-
-    request.body.user = {
+    
+    request.user = {
       id: user_id,
     };
     return next();
