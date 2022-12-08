@@ -6,8 +6,8 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { MULTER } from "../configs/upload";
 
 const usersRoutes = Router();
-const usersController = new UsersController();
 const upload = multer(MULTER);
+const usersController = new UsersController();
 const userAvatarController = new UserAvatarController(); 
 
 usersRoutes.post("/", usersController.create);

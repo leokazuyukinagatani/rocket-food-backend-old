@@ -37,7 +37,7 @@ export class UserAvatarController {
       await diskStorage.deleteFile(imageResult.filename);
     }
 
-    const image = await diskStorage.saveFile(avatarFilename, "users");
+    const image = await diskStorage.saveFile('arquivo-teste', "users");
     await imageCreateService.execute(image);
 
     if (!image) {
