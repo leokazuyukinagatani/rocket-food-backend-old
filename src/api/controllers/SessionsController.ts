@@ -3,17 +3,16 @@ import { AppError } from "../utils/AppError";
 import { authConfig } from "../configs/auth";
 import { sign } from "jsonwebtoken";
 import { Request, Response } from "express";
-import { UserShowService } from "../services/users/UserShowService";
 import { UserRepository } from "../repositories/users/UserRepository";
+import { UserShowByEmailService } from "../services/users/UserShowByEmailService";
 
 export class SessionsController {
   async create(request: Request, response: Response) {
     const { email, password } = request.body;
-
     const userRepository = new UserRepository();
-    const userShowService = new UserShowService(userRepository);
+    const userShowByEmailService = new UserShowByEmailService(userRepository);
 
-    const user = await userShowService.execute(email);
+    const user = await userShowByEmailService.execute(email);
 
     if (!user) {
       throw new AppError("email ou senha incorretos");
