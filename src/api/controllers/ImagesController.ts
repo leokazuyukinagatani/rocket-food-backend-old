@@ -7,88 +7,88 @@ import { ImageCreateService } from "../services/images/ImageCreateService";
 import { ImageDeleteService } from "../services/images/ImageDeleteService";
 import { ImageIndexService } from "../services/images/ImageIndexService";
 import { ImageShowService } from "../services/images/ImageShowService";
-import { ImageUpdateService } from "../services/images/ImageUpdate";
+import { ImageUpdateService } from "../services/images/ImageUpdateService";
 import { AppError } from "../utils/AppError";
 
-export class IngredientsController {
+export class ImagesController {
   async create(request: Request, response: Response) {
-    const { name, description } = request.body;
+    const { filename, url } = request.body;
 
-    const ingredientRepository = new IngredientRepository();
-    const ingredientCreateService = new IngredientCreateService(
-      ingredientRepository
+    const imageRepository = new ImageRepository();
+    const imageCreateService = new ImageCreateService(
+      imageRepository
     );
 
-    const ingredientResult = await ingredientCreateService.execute({
-      name,
-      description,
+    const imageResult = await imageCreateService.execute({
+      filename,
+      url,
     });
 
-    if (ingredientResult instanceof AppError) {
-      return response.status(400).json(ingredientResult.message);
+    if (imageResult instanceof AppError) {
+      return response.status(400).json(imageResult.message);
     }
 
-    return response.status(201).json(ingredientResult);
+    return response.status(201).json(imageResult);
   }
 
   async delete(request: Request, response: Response) {
-    const { ingredient_id } = request.body;
-    const ingredientRepository = new IngredientRepository();
-    const ingredientDeleteService = new IngredientDeleteService(
-      ingredientRepository
+    const { image_id } = request.body;
+    const imageRepository = new ImageRepository();
+    const imageDeleteService = new ImageDeleteService(
+      imageRepository
     );
-    const ingredientResult = await ingredientDeleteService.execute(
-      ingredient_id
+    const imageResult = await imageDeleteService.execute(
+      image_id
     );
-    if (ingredientResult instanceof AppError) {
-      return response.status(400).json(ingredientResult.message);
+    if (imageResult instanceof AppError) {
+      return response.status(400).json(imageResult.message);
     }
-    return response.status(200).json(ingredientResult);
+    return response.status(200).json(imageResult);
   }
 
   async show(request: Request, response: Response) {
-    const { ingredient_id } = request.body;
-    const ingredientRepository = new IngredientRepository();
-    const ingredientShowService = new IngredientShowService(
-      ingredientRepository
+    const { image_id } = request.body;
+    const imageRepository = new ImageRepository();
+    const imageShowService = new ImageShowService(
+      imageRepository
     );
 
-    const ingredientResult = await ingredientShowService.execute(ingredient_id);
+    const imageResult = await imageShowService.execute(image_id);
 
-    if (ingredientResult instanceof AppError) {
-      return response.status(400).json(ingredientResult.message);
+    if (imageResult instanceof AppError) {
+      return response.status(400).json(imageResult.message);
     }
-    return response.status(200).json(ingredientResult);
+    return response.status(200).json(imageResult);
   }
 
   async index(request: Request, response: Response) {
-    const ingredientRepository = new IngredientRepository();
-    const ingredientIndexService = new IngredientIndexService(
-      ingredientRepository
+    const imageRepository = new ImageRepository();
+    const imageIndexService = new ImageIndexService(
+      imageRepository
     );
 
-    const ingredientsResult = await ingredientIndexService.execute();
+    const imagesResult = await imageIndexService.execute();
 
-    return response.status(200).json(ingredientsResult);
+    return response.status(200).json(imagesResult);
   }
 
   async update(request: Request, response: Response) {
-    const { id, name, description }: IIngredient = request.body;
+    const { id, filename, url }: IImage = request.body;
 
-    const ingredientRepository = new IngredientRepository();
-    const ingredientUpdateService = new IngredientUpdateService(
-      ingredientRepository
+    const imageRepository = new ImageRepository();
+    const imageUpdateService = new ImageUpdateService(
+      imageRepository
     );
 
-    const updatedIngredient = await ingredientUpdateService.execute({
+    const updatedImage = await imageUpdateService.execute({
       id,
-      name,
-      description,
+      filename,
+      url,
     });
 
-    if (updatedIngredient instanceof AppError) {
-      return response.status(400).json(updatedIngredient.message);
+    if (updatedImage instanceof AppError) {
+      return response.status(400).json(updatedImage.message);
     }
-    return response.status(200).json(updatedIngredient);
+    return response.status(200).json(updatedImage);
   }
 }
