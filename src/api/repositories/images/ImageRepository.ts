@@ -53,6 +53,23 @@ export class ImageRepository {
     return updatedImage;
   }
 
+  async upsert({filename, url}: IImage) {
+    const upsertImage = await prisma.image.upsert({
+      where: {
+        filename
+      },
+      update: {
+        url,
+      },
+      create: {
+        filename,
+        url,
+      },
+    });
+
+    return upsertImage;
+  }
+
   async delete(id: string) {
     const deletedImage = await prisma.image.delete({
       where: {
