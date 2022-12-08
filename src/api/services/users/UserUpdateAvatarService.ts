@@ -1,11 +1,11 @@
-import { IImage } from "../../repositories/images/ImageRepository";
+import { Image } from "@prisma/client";
 import { UserRepository } from "../../repositories/users/UserRepository";
 import { AppError } from "../../utils/AppError";
 import { UserShowService } from "./UserShowService";
 
 interface UserRequest {
   id: string;
-  image: IImage;
+  image: Image;
 }
 
 export class UserUpdateAvatarService {

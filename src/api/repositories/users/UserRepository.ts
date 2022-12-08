@@ -97,8 +97,7 @@ export class UserRepository {
         id: user.id,
       },
       data: {
-        ...user,
-        profile: { connect: { id: image.id } },
+        imageId: image.id 
       },
     });
     return updatedUser;

@@ -1,7 +1,7 @@
 import { ImageRepository } from "../../repositories/images/ImageRepository";
 import { AppError } from "../../utils/AppError";
 
-export class ImageShowService {
+export class ImageShowByNameService {
   repository: ImageRepository;
 
   constructor(repository: ImageRepository) {
@@ -18,10 +18,6 @@ export class ImageShowService {
     }
 
     const image = await this.repository.showByName(filename);
-
-    if (!image) {
-      throw new AppError("Image not found");
-    }
 
     return image;
   }
