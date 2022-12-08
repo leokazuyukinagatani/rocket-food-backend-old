@@ -81,7 +81,7 @@ model UsersOnPermissions {
 
 model Image {
   id          String      @id @default(uuid())
-  filename    String
+  filename    String      @unique
   url         String
   ingredients Ingredient?
   products    Product?
