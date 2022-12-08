@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { TMP_FOLDER, UPLOAD_FOLDER } from "../api/configs/upload";
+import { AppError } from "../api/utils/AppError";
 import { CloudinaryStorage } from "./CloudinaryStorage";
 
 export class DiskStorage {
@@ -15,6 +16,9 @@ export class DiskStorage {
 
     await this.deleteFile(file);
     console.log(response);
+    if(!response){
+      throw new AppError('Erro in CloudinaryStorage');
+    }
     return response;
   }
 
