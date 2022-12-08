@@ -9,7 +9,10 @@ import { AppError } from "../utils/AppError";
 export class UserAvatarController {
   async update(request: Request, response: Response) {
     const user_id = request.body.user.id;
-    const avatarFilename = request.file?.filename;
+    if (!request.file) {
+      throw new AppError("File is required", 404);
+    }
+    const avatarFilename = request.file.filename;
 
     const userRepository = new UserRepository();
     const userShowService = new UserShowService(userRepository);
@@ -22,9 +25,7 @@ export class UserAvatarController {
     if (!user) {
       throw new AppError("Only authenticated users can change avatar", 401);
     }
-    if (!avatarFilename) {
-      throw new AppError("Filename is required", 404);
-    }
+   
 
     const imageResult = await prisma.image.findFirst({
       where: { filename: avatarFilename },
