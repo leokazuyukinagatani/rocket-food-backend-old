@@ -4,10 +4,6 @@ import { AppError } from "../../utils/AppError";
 import { UserShowByEmailService } from "./UserShowByEmailService";
 import { UserShowService } from "./UserShowService";
 
-interface Image {
-  filename: string;
-  url: string;
-}
 
 interface UserRequest {
   id: string;
@@ -15,7 +11,6 @@ interface UserRequest {
   email?: string;
   password?: string;
   passwordConfirm?: string;
-  image: Image;
 }
 
 export class UserUpdateService {
@@ -29,7 +24,6 @@ export class UserUpdateService {
     email,
     password,
     passwordConfirm,
-    image
   }: UserRequest) {
     
     const user = await new UserShowService(this.repository).execute(id);
@@ -71,15 +65,7 @@ export class UserUpdateService {
     }else {
       throw new AppError('Invalid password');
     }
-    if(image){
-      const updatedUserWithImage = await this.repository.update({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        image
-      });
-      return updatedUserWithImage;
-    }
+
     const updatedUser = await this.repository.update({
       id: user.id,
       name: user.name,

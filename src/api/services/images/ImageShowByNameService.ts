@@ -8,16 +8,16 @@ export class ImageShowService {
     this.repository = repository;
   }
 
-  async execute(image_id: string) {
-    if (!image_id) {
-      throw new AppError("Image id is required.");
+  async execute(filename: string) {
+    if (!filename) {
+      throw new AppError("Image filename is required.");
     }
 
-    if (typeof image_id != "string" || image_id === " ") {
-      throw new AppError("Image id should be a String.");
+    if (typeof filename != "string" || filename === " ") {
+      throw new AppError("Image filename should be a String.");
     }
 
-    const image = await this.repository.showById(image_id);
+    const image = await this.repository.showByName(filename);
 
     if (!image) {
       throw new AppError("Image not found");

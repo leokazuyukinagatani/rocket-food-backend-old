@@ -1,5 +1,6 @@
 import { Permission, Role } from "@prisma/client";
 import { prisma } from "../../database/prisma";
+import { IImage } from "../images/ImageRepository";
 
 export interface IUser {
   id?: string;
@@ -8,17 +9,11 @@ export interface IUser {
   password: string;
 }
 
-interface IImage {
-  filename: string;
-  url: string;
-}
-
 interface IUserRequest {
   id: string;
   name?: string;
   email?: string;
   password?: string;
-  image?: IImage;
 }
 
 export class UserRepository {
@@ -33,39 +28,19 @@ export class UserRepository {
     return { id: createdUser.id };
   }
 
-  async update({ id, name, email, password, image }: IUserRequest) {
-    if (image) {
-      const updatedUser = await prisma.user.update({
-        where: {
-          id,
-        },
-        data: {
-          name,
-          email,
-          password,
-          updatedAt: new Date(),
-          profile: {
-            create: {
-              ...image,
-            },
-          },
-        },
-      });
-      return { id: updatedUser.id };
-    } else {
-      const updatedUser = await prisma.user.update({
-        where: {
-          id,
-        },
-        data: {
-          name,
-          email,
-          password,
-          updatedAt: new Date(),
-        },
-      });
-      return { id: updatedUser.id };
-    }
+  async update({ id, name, email, password }: IUserRequest) {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        email,
+        password,
+        updatedAt: new Date(),
+      },
+    });
+    return { id: updatedUser.id };
   }
 
   async showByEmail(email: string) {
@@ -116,7 +91,18 @@ export class UserRepository {
     });
     return userResult;
   }
-
+  async updateWithImage(user: IUser, image: IImage) {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        ...user,
+        profile: { connect: { id: image.id } },
+      },
+    });
+    return updatedUser;
+  }
   async updateACL(
     id: string,
     permissionExists: Permission[],
