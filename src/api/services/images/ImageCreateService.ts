@@ -15,7 +15,12 @@ export class ImageCreateService {
   }
 
   async execute({ filename, url }: ImageRequest) {
+    // console.log(filename, url ,'dentro do service')
+    console.log('dentro do service', filename, url)
+    console.log(typeof(filename))
     const imageExist = await this.repository.showByName(filename);
+    // console.log('response of repository image',imageExist)
+    // console.log(imageExist, 'encontrou uma imagem')
     if (imageExist) {
       throw new AppError("Image already exists", 403);
     }

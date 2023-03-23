@@ -1,17 +1,17 @@
-import { prisma } from "../../database/prisma";
+import { prisma } from '../../database/prisma'
 
 export interface IProduct {
-  id?: string;
-  name: string;
-  description: string;
-  price: number;
-  imageId: string;
+  id?: string
+  name: string
+  description: string
+  price: number
+  imageId: string
 }
 export class ProductRepository {
   async index() {
-    const productsResult = await prisma.product.findMany();
+    const productsResult = await prisma.product.findMany()
 
-    return productsResult;
+    return productsResult
   }
 
   async showById(id: string) {
@@ -19,8 +19,8 @@ export class ProductRepository {
       where: {
         id,
       },
-    });
-    return productResult;
+    })
+    return productResult
   }
 
   async showByName(name: string) {
@@ -28,9 +28,9 @@ export class ProductRepository {
       where: {
         name,
       },
-    });
+    })
 
-    return productResult;
+    return productResult
   }
 
   async create({ name, description, price, imageId }: IProduct) {
@@ -40,10 +40,21 @@ export class ProductRepository {
         description,
         price,
         imageId,
-      },
-    });
 
-    return { id: createdProduct.id };
+        ingredients: {
+         create: {
+          ingredient: {
+            
+          }
+         },
+        },
+      },
+      include: {
+        ingredients: true,
+      },
+    })
+
+    return { id: createdProduct.id }
   }
 
   async update({ id, name, description, price }: IProduct) {
@@ -56,9 +67,9 @@ export class ProductRepository {
         description,
         price,
       },
-    });
+    })
 
-    return { id: updatedProduct.id };
+    return { id: updatedProduct.id }
   }
 
   async delete(id: string) {
@@ -66,8 +77,8 @@ export class ProductRepository {
       where: {
         id,
       },
-    });
+    })
 
-    return { id: deletedProduct.id };
+    return { id: deletedProduct.id }
   }
 }

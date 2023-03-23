@@ -13,10 +13,10 @@ export class DiskStorage {
       path.resolve(TMP_FOLDER, file),
       path.resolve(UPLOAD_FOLDER, file)
     );
-    console.log('estou dentro do diskStorage')
+    // console.log('estou dentro do diskStorage')
    const response = await new CloudinaryStorage().saveFile({file, option});
-    await this.deleteFile(file);
-    console.log('response save file in Cloudinary===>',response);
+   await this.deleteFile(file);
+    // console.log('response save file in Cloudinary===>',response);
     if(!response){
       throw new AppError('Erro in CloudinaryStorage');
     }

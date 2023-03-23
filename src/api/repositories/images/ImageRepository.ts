@@ -21,12 +21,16 @@ export class ImageRepository {
     return imageResult;
   }
 
-  async showByName(name: string) {
-    const imageResult = await prisma.image.findFirst({
+  async showByName(filename: string) {
+    // console.log('dentro do repository',name)
+    console.log('tipo da entrada',typeof(filename))
+
+    const imageResult = await prisma.image.findUnique({
       where: {
-        filename: name,
+        filename: 'dadas',
       },
     });
+    console.log('resposta do prisma',imageResult)
 
     return imageResult;
   }

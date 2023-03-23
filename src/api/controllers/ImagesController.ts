@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { CloudinaryStorage } from "../../providers/CloudinaryStorage";
+import { DiskStorage } from "../../providers/DiskStorage";
 import {
   IImage,
   ImageRepository,
@@ -12,18 +14,39 @@ import { AppError } from "../utils/AppError";
 
 export class ImagesController {
   async create(request: Request, response: Response) {
-    const { filename, url } = request.body;
+   
+    // console.log(request, 'dentro do image controller')
+    const { file } = request
+    if(!file){
+      return response.status(400).json('imagem não encontrada')
+    }
+    const diskStorage = new DiskStorage();
+    const fileInDisk = await diskStorage.saveFile(file.filename, 'products' )
+    // console.log(fileInDisk, 'file in disk')
+  //   const { option, image } = request.body;
+   
+  // //  console.log(request)
+  //  console.log(option, image,'opções')
 
+  //   // console.log(file.filename, option )
+  //   if(!image) {
+  //     return response.status(400).json( 'arquivo não encontrado')
+  //   }
+
+  //   console.log('Entrando no diskStorage para salvar o arquivo no cloudinary')
+    // const diskStorage = new DiskStorage();
+    // const fileInDisk = await diskStorage.saveFile(image.filename, option)
+
+    // console.log('Salvou no disk')
+    
     const imageRepository = new ImageRepository();
     const imageCreateService = new ImageCreateService(
       imageRepository
     );
 
-    const imageResult = await imageCreateService.execute({
-      filename,
-      url,
-    });
-
+    const imageResult = await imageCreateService.execute(fileInDisk);
+    
+    console.log('resultado do service',imageResult)
     if (imageResult instanceof AppError) {
       return response.status(400).json(imageResult.message);
     }

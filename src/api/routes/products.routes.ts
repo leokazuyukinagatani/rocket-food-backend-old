@@ -7,8 +7,8 @@ const productsRoutes = Router();
 const productsController = new ProductsController();
 
 productsRoutes.use(ensureAuthenticated);
-
-productsRoutes.post("/", can(["create_product"]), productsController.create);
+// can(["create_product"])
+productsRoutes.post("/", productsController.create);
 productsRoutes.delete("/:id", productsController.delete);
 productsRoutes.put("/", productsController.update);
 productsRoutes.get("/", productsController.index);
